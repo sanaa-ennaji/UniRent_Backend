@@ -2,6 +2,7 @@ package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 @Table(name = "property_amenities")
@@ -10,13 +11,14 @@ public class AmenityProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private  int quantity ;
+    @NotNull
+    private  int quantity = 0 ;
     @ManyToOne
-    @JoinColumn(name = "property_id")
+    @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
     @ManyToOne
-    @JoinColumn(name = "amenity_id")
+    @JoinColumn(name = "amenity_id", nullable = false)
     private Amenity amenity;
 
 }

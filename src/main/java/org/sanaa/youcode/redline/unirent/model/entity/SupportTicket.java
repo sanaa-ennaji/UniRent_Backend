@@ -12,8 +12,6 @@ public class SupportTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private Long userId;
     private String subject;
     private String message;
     private String status; // open, resolved

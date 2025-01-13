@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Table(name = "properties")
@@ -31,12 +31,11 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
-    @ManyToMany
-    @JoinTable(
-        name = "property_amenities",
-        joinColumns = @JoinColumn(name = "property_id"),
-        inverseJoinColumns = @JoinColumn(name = "amenity_id"))
-    private Set<Amenity> amenities;
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
+    private List<AmenityProperty> amenityProperties;
 
 
 }
