@@ -10,7 +10,7 @@ public class AmenityProperty {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private  int quantity ;
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
@@ -18,4 +18,5 @@ public class AmenityProperty {
     @ManyToOne
     @JoinColumn(name = "amenity_id")
     private Amenity amenity;
+
 }
