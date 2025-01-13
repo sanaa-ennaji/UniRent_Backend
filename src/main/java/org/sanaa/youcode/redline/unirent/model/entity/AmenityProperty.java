@@ -18,3 +18,4 @@ public class AmenityProperty {
     @ManyToOne
     @JoinColumn(name = "amenity_id")
     private Amenity amenity;
+}
