@@ -37,6 +37,9 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private List<AmenityProperty> amenityProperties;
 
+    @OneToMany(mappedBy = "property")
+    private List<Booking> bookings;
+
 
 }
 

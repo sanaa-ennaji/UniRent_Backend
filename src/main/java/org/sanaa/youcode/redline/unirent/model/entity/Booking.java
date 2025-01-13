@@ -24,7 +24,7 @@ public class Booking {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "property_id", insertable = false, updatable = false)
+    @JoinColumn(name = "property_id")
     private Property property;
 
     @ManyToOne
