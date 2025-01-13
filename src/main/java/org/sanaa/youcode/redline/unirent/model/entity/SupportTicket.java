@@ -16,7 +16,7 @@ public class SupportTicket {
     private Long userId;
     private String subject;
     private String message;
-    private String status; // Open, Resolved
+    private String status; // open, resolved
 
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)

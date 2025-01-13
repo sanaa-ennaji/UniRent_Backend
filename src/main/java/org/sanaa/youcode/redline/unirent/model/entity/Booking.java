@@ -2,6 +2,7 @@ package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.sanaa.youcode.redline.unirent.model.enums.Status;
 import org.springframework.data.annotation.Id;
 
 @Entity
@@ -19,7 +20,8 @@ public class Booking {
 
     private String startDate;
     private String endDate;
-    private String status; // Confirmed, Pending, Cancelled
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "property_id", insertable = false, updatable = false)

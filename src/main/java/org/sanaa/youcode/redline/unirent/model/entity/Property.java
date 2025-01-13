@@ -31,16 +31,6 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
 
-//    public void addImage(Image image) {
-//        images.add(image);
-//        image.setProperty(this);
-//    }
-//
-//    public void removeImage(Image image) {
-//        images.remove(image);
-//        image.setProperty(null);
-//    }
-
     @ManyToMany
     @JoinTable(
         name = "property_amenities",
@@ -50,3 +40,13 @@ public class Property {
 
 
 }
+
+//    public void addImage(Image image) {
+//        images.add(image);
+//        image.setProperty(this);
+//    }
+//
+//    public void removeImage(Image image) {
+//        images.remove(image);
+//        image.setProperty(null);
+//    }
