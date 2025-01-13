@@ -2,7 +2,6 @@ package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 
