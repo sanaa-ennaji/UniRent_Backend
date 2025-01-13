@@ -11,9 +11,6 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long userId;
-    private Long propertyId;
     private int rating;
     private String comments;
 

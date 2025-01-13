@@ -15,9 +15,6 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long studentId;
-    private Long propertyId;
-
     private String startDate;
     private String endDate;
     @Enumerated(EnumType.STRING)

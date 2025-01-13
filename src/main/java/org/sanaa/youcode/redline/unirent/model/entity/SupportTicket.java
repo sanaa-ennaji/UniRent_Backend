@@ -15,6 +15,7 @@ public class SupportTicket {
     private Long id;
     private String subject;
     private String message;
+    @Enumerated(EnumType.STRING)
     private SupportTicketStatus status;
 
     @ManyToOne

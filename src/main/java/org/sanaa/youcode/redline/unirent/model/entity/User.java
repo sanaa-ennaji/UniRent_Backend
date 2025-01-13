@@ -22,12 +22,13 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "student")
     private List<Booking> bookings ;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "landlord")
     private List<Property> properties ;
 
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews ;
 
 }
