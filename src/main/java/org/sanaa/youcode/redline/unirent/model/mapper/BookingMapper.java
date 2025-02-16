@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.model.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.BookingRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.BookingResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.Booking;
@@ -12,7 +13,7 @@ public interface BookingMapper {
 
     BookingResponseDTO toResponseDTO(Booking entity) ;
     Booking toEntity(BookingRequestDTO requestDTO);
-    List<BookingResponseDTO> toResponseDTOList (List<Image> entities);
+    List<BookingResponseDTO> toResponseDTOList (List<Booking> entities);
     List<Booking> toEntityList(List<BookingRequestDTO> requestDTOs);
-    void updateEntityFromRequest(BookingRequestDTO amenityRequestDTO,@MappingTarget Image image);
+    void updateEntityFromRequest(BookingRequestDTO amenityRequestDTO,@MappingTarget Booking booking);
 }
