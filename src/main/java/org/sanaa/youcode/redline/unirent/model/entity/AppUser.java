@@ -3,13 +3,11 @@ package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Data
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id ;
@@ -21,7 +19,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private Role role;
+    private AppRole role;
 
     @OneToMany(mappedBy = "student")
     private List<Booking> bookings ;

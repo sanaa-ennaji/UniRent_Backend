@@ -22,7 +22,7 @@ public class Property {
 
     @ManyToOne
     @JoinColumn(name = "landlord_id")
-    private User landlord;
+    private AppUser landlord;
 
     @ManyToOne
     @JoinColumn(name = "university_id")

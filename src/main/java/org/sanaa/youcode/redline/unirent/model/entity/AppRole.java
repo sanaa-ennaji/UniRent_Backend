@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name = "roles")
 @Data
-public class Role {
+
+public class AppRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -17,7 +17,7 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role")
-    private  List<User> user ;
+    private  List<AppUser> user ;
 
 
 }
