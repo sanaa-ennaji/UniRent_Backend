@@ -1,14 +1,13 @@
 package org.sanaa.youcode.redline.unirent.model.mapper;
 
-import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
-import org.springframework.web.bind.annotation.Mapping;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.RoleRequestDTO;
+import org.sanaa.youcode.redline.unirent.model.dto.Response.RoleResponseDTO;
+
+import javax.management.relation.Role;
 
 public interface UserMapper {
 
-    @Mapping(source = "role.id", target = "roleId")
-    @Mapping(source = "role.roleName", target = "roleName")
-    AppUserResponseDTO toDto(AppUser appUser);
+    RoleResponseDTO toDto(Role role);
 
-    @Mapping(source = "roleId", target = "role.id")
-    AppUser toEntity(AppUserRequestDTO dto);
+    Role toEntity(RoleRequestDTO dto);
 }
