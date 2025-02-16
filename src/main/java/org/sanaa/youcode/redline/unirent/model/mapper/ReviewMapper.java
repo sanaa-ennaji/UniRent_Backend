@@ -15,5 +15,5 @@ public interface ReviewMapper {
     Review toEntity(ReviewRequestDTO requestDTO);
     List<ReviewResponseDTO> toResponseDTOList (List<Review> entities);
     List<Review> toEntityList(List<ReviewRequestDTO> requestDTOs);
-    void updateEntityFromRequest(ReviewRequestDTO amenityRequestDTO,@MappingTarget Review review);
+    void updateEntityFromRequest(ReviewRequestDTO reviewRequestDTO,@MappingTarget Review review);
 }
