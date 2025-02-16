@@ -1,4 +1,9 @@
 package org.sanaa.youcode.redline.unirent.repository;
 
-public class SupportTicketRepository {
+import org.sanaa.youcode.redline.unirent.model.entity.SupportTicket;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface SupportTicketRepository extends JpaRepository<SupportTicket, Long> {
 }
