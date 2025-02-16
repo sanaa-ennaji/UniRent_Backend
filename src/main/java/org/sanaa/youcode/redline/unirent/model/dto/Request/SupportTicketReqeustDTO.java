@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SupportTicketReqeustDTO {
+public class SupportTicketReqestDTO {
     @NotBlank
     private String subject;
 
