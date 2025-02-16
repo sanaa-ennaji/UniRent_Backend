@@ -18,6 +18,5 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "booking_id", insertable = false, updatable = false)
     private Booking booking;
-
-
+    
 }
