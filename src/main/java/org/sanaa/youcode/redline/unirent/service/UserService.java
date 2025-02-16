@@ -1,4 +1,56 @@
 package org.sanaa.youcode.redline.unirent.service;
 
-public class UserService {
+import jakarta.transaction.Transactional;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
+import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
+import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
+import org.sanaa.youcode.redline.unirent.repository.UserRepository;
+import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class UserService implements UserServiceI {
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
+
+    @Override
+    public UserResponseDTO getUserById(Long id) {
+        AppUser user = userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        return userMapper.toResponseDto(user);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAllUsers() {
+        return userMapper.toResponseDTOList(userRepository.findAll());
+    }
+
+    @Override
+    public UserResponseDTO createUser(UserRequestDTO requestDTO) {
+        AppUser user = userMapper.toEntity(requestDTO);
+        return userMapper.toResponseDto(userRepository.save(user));
+    }
+
+    @Override
+    public UserResponseDTO updateUser(Long id, UserRequestDTO requestDTO) {
+        AppUser user = userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        userMapper.updateEntityFromRequest(requestDTO, user);
+        return userMapper.toResponseDto(userRepository.save(user));
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
 }
