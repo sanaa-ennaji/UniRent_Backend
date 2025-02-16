@@ -1,14 +1,18 @@
 package org.sanaa.youcode.redline.unirent.service;
 
+import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.ImageRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.ImageResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.Image;
 import org.sanaa.youcode.redline.unirent.model.mapper.ImageMapper;
 import org.sanaa.youcode.redline.unirent.repository.ImageRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.ImageServiceI;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class ImageService implements ImageServiceI {
     private final ImageRepository imageRepository;
     private final ImageMapper imageMapper;
