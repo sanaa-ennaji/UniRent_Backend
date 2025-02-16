@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring" )
 public interface TransactionMapper {
     TransactionResponseDTO toResponseDTO(Transaction entity) ;
-    SupportTicket toEntity(TransactionRequestDTO requestDTO);
-    List<TransactionResponseDTO> toResponseDTOList (List<> entities);
-    List<SupportTicket> toEntityList(List<TransactionRequestDTO> requestDTOs);
-    void updateEntityFromRequest(TransactionRequestDTO amenityRequestDTO,@MappingTarget SupportTicket supportTicket);
+    Transaction toEntity(TransactionRequestDTO requestDTO);
+    List<TransactionResponseDTO> toResponseDTOList (List<Transaction> entities);
+    List<Transaction> toEntityList(List<TransactionRequestDTO> requestDTOs);
+    void updateEntityFromRequest(TransactionRequestDTO amenityRequestDTO,@MappingTarget Transaction transaction);
 }
