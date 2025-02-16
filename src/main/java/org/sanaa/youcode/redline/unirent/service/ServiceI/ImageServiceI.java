@@ -1,4 +1,4 @@
 package org.sanaa.youcode.redline.unirent.service.ServiceI;
 
-public class ImageServiceI {
+public interface ImageServiceI {
 }
