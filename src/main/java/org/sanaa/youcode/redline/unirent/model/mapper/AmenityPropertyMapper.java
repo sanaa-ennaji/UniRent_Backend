@@ -4,10 +4,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.AmenityPropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.AmenityPropertyResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.AmenityProperty;
 
 import java.util.List;
 @Mapper(componentModel = "spring" )
-public interface AmenityProperty {
+public interface AmenityPropertyMapper {
     AmenityPropertyResponseDTO toResponseDTO(AmenityProperty entity) ;
     AmenityProperty toEntity(AmenityPropertyRequestDTO requestDTO);
     List<AmenityPropertyResponseDTO> toResponseDTOList (List<AmenityProperty> entities);
