@@ -1,21 +1,22 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.BookingRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.BookingResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.BookingService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-RestController
-@RequestMapping("/api/bookings")
+@RestController
+@RequestMapping("/api/v1/booking")
+@Validated
+@RequiredArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
 
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponseDTO> getBookingById(@PathVariable Long id) {
@@ -43,3 +44,4 @@ public class BookingController {
         bookingService.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }
+}
