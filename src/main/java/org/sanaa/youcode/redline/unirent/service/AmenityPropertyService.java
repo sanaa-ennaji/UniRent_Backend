@@ -1,8 +1,10 @@
 package org.sanaa.youcode.redline.unirent.service;
 
 import jakarta.transaction.Transactional;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.AmenityPropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.AmenityPropertyResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AmenityProperty;
+import org.sanaa.youcode.redline.unirent.model.mapper.AmenityPropertyMapper;
 import org.sanaa.youcode.redline.unirent.repository.AmenityPropertyRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.AmenityPropertyServiceI;
 import org.springframework.stereotype.Service;
