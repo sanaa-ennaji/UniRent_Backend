@@ -1,4 +1,9 @@
 package org.sanaa.youcode.redline.unirent.repository;
 
-public class TransactionRepository {
+import org.sanaa.youcode.redline.unirent.model.entity.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 }
