@@ -9,6 +9,6 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AmenityRequestDTO {
-
+    @NotNull
    private String name;
 }
