@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
-import org.springframework.web.bind.annotation.Mapping;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring" )
 public interface UserMapper {
