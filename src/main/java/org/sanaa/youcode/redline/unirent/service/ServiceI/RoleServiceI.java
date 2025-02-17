@@ -8,7 +8,7 @@ import java.util.List;
 public interface RoleServiceI {
     RoleResponseDTO getRoleById(Long id);
     List<RoleResponseDTO> getAllRoles();
-    RoleResponseDTO createRole(RoleRequestDTO requestDTO);
+    RoleResponseDTO create(RoleRequestDTO requestDTO);
     RoleResponseDTO updateRole(Long id, RoleRequestDTO requestDTO);
     void deleteRole(Long id);
 }

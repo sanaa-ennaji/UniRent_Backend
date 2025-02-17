@@ -34,7 +34,7 @@ public class RoleService implements RoleServiceI {
     }
 
     @Override
-    public RoleResponseDTO createRole(RoleRequestDTO requestDTO) {
+    public RoleResponseDTO create(RoleRequestDTO requestDTO) {
         AppRole role = roleMapper.toEntity(requestDTO);
         AppRole savedRole = roleRepository.save(role);
         return roleMapper.toResponseDTO(savedRole);
