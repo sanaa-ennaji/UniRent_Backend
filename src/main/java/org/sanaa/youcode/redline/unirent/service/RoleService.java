@@ -12,7 +12,6 @@ import javax.management.relation.Role;
 import java.util.List;
 
 @Service
-@Transactional
 public class RoleService implements RoleServiceI {
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
