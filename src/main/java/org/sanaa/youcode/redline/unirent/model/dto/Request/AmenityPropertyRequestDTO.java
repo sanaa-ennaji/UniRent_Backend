@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class AmenityPropertyRequestDTO {
     @NotNull
     @Min(0)
-    private int quantity;
+    private Integer quantity;
 
     @NotNull
     private Long propertyId;

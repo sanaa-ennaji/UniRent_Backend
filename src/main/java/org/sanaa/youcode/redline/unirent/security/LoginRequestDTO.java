@@ -1,4 +1,4 @@
-package org.sanaa.youcode.redline.unirent.model.dto.Request;
+package org.sanaa.youcode.redline.unirent.security;
 
 import lombok.Getter;
 import lombok.Setter;
