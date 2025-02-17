@@ -1,7 +1,6 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.sanaa.youcode.redline.unirent.model.dto.Request.LoginRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.UserService;
@@ -45,14 +44,14 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UserResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
-        return ResponseEntity.ok(userService.loginUser(loginRequestDTO));
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO requestDTO) {
-        return ResponseEntity.ok(userService.registerUser(requestDTO));
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<UserResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
+//        return ResponseEntity.ok(userService.loginUser(loginRequestDTO));
+//    }
+//
+//    @PostMapping("/register")
+//    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO requestDTO) {
+//        return ResponseEntity.ok(userService.registerUser(requestDTO));
+//    }
 }
 
