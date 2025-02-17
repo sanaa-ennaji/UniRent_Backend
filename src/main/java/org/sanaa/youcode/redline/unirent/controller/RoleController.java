@@ -20,7 +20,6 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<RoleResponseDTO> getRoleById(@PathVariable Long id) {
         return ResponseEntity.ok(roleService.getRoleById(id));
