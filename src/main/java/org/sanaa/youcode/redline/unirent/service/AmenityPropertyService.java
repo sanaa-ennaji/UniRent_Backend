@@ -8,16 +8,18 @@ import org.sanaa.youcode.redline.unirent.model.entity.AmenityProperty;
 import org.sanaa.youcode.redline.unirent.model.mapper.AmenityPropertyMapper;
 import org.sanaa.youcode.redline.unirent.repository.AmenityPropertyRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.AmenityPropertyServiceI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @Transactional
-public class AmenityPropertyService  implements AmenityPropertyServiceI {
+public class AmenityPropertyService implements AmenityPropertyServiceI {
     private final AmenityPropertyRepository amenityPropertyRepository;
     private final AmenityPropertyMapper amenityPropertyMapper;
 
+    @Autowired
     public AmenityPropertyService(AmenityPropertyRepository amenityPropertyRepository, AmenityPropertyMapper amenityPropertyMapper) {
         this.amenityPropertyRepository = amenityPropertyRepository;
         this.amenityPropertyMapper = amenityPropertyMapper;
@@ -26,7 +28,7 @@ public class AmenityPropertyService  implements AmenityPropertyServiceI {
     @Override
     public AmenityPropertyResponseDTO getAmenityPropertyById(Long id) {
         AmenityProperty amenityProperty = amenityPropertyRepository.findById(id)
-            .orElseThrow(() ->  new ResourceNotFoundException("AmenityProperty not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("AmenityProperty not found"));
         return amenityPropertyMapper.toResponseDTO(amenityProperty);
     }
 
@@ -53,5 +55,4 @@ public class AmenityPropertyService  implements AmenityPropertyServiceI {
     public void deleteAmenityProperty(Long id) {
         amenityPropertyRepository.deleteById(id);
     }
-
 }
