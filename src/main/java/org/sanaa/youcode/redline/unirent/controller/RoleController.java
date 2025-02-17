@@ -1,6 +1,5 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.RoleRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.RoleResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.RoleService;
