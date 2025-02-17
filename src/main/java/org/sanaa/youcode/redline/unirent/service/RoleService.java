@@ -6,6 +6,8 @@ import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
 import org.sanaa.youcode.redline.unirent.model.mapper.RoleMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.RoleServiceI;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class RoleService implements RoleServiceI {
         AppRole role = roleRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Role not found"));
         return roleMapper.toResponseDTO(role);
+
     }
 
     @Override
@@ -36,6 +39,7 @@ public class RoleService implements RoleServiceI {
     public RoleResponseDTO createRole(RoleRequestDTO requestDTO) {
         AppRole role = roleMapper.toEntity(requestDTO);
         return roleMapper.toResponseDTO(roleRepository.save(role));
+        return ResponseEntity.status(HttpStatus.CREATED).body(answerResponse);
     }
 
     @Override
