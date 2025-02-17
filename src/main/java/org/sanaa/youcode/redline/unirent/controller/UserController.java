@@ -1,18 +1,21 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
+import org.sanaa.youcode.redline.unirent.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
