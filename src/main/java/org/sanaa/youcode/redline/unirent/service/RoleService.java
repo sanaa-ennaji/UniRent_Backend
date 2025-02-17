@@ -6,8 +6,6 @@ import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
 import org.sanaa.youcode.redline.unirent.model.mapper.RoleMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.RoleServiceI;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,10 +34,10 @@ public class RoleService implements RoleServiceI {
     }
 
     @Override
-    public ResponseEntity<RoleResponseDTO>  createRole(RoleRequestDTO requestDTO) {
+    public RoleResponseDTO createRole(RoleRequestDTO requestDTO) {
         AppRole role = roleMapper.toEntity(requestDTO);
         AppRole savedRole = roleRepository.save(role);
-        return RoleResponseDTO.status(HttpStatus.CREATED).body(savedRole);;
+        return roleMapper.toResponseDTO(savedRole);
     }
 
 
