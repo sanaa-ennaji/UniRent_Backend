@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.service;
 
 import jakarta.transaction.Transactional;
+import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.AmenityPropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.AmenityPropertyResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AmenityProperty;
@@ -25,7 +26,7 @@ public class AmenityPropertyService  implements AmenityPropertyServiceI {
     @Override
     public AmenityPropertyResponseDTO getAmenityPropertyById(Long id) {
         AmenityProperty amenityProperty = amenityPropertyRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("AmenityProperty not found"));
+            .orElseThrow(() ->  new ResourceNotFoundException("AmenityProperty not found"));
         return amenityPropertyMapper.toResponseDTO(amenityProperty);
     }
 
