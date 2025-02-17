@@ -12,10 +12,13 @@ import java.util.List;
 
 @RestController
 @Validated
-@RequiredArgsConstructor
 @RequestMapping("/api/amenity-properties")
 public class AmenityPropertyController {
     private final AmenityPropertyService amenityPropertyService;
+
+    public AmenityPropertyController(AmenityPropertyService amenityPropertyService) {
+        this.amenityPropertyService = amenityPropertyService;
+    }
 
 
     @GetMapping("/{id}")
