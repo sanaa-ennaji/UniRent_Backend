@@ -16,8 +16,6 @@ import java.util.List;
 public class TransactionController {
     private final TransactionService transactionService;
 
-
-
     @GetMapping("/{id}")
     public ResponseEntity<TransactionResponseDTO> getTransactionById(@PathVariable Long id) {
         return ResponseEntity.ok(transactionService.getTransactionById(id));

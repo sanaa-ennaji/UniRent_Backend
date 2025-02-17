@@ -16,9 +16,9 @@ import java.util.List;
 public class AmenityPropertyController {
     private final AmenityPropertyService amenityPropertyService;
 
-    public AmenityPropertyController(AmenityPropertyService amenityPropertyService) {
-        this.amenityPropertyService = amenityPropertyService;
-    }
+        public AmenityPropertyController(AmenityPropertyService amenityPropertyService) {
+            this.amenityPropertyService = amenityPropertyService;
+        }
 
 
     @GetMapping("/{id}")
