@@ -6,7 +6,7 @@ import org.sanaa.youcode.redline.unirent.model.dto.Response.AmenityPropertyRespo
 import org.sanaa.youcode.redline.unirent.model.entity.AmenityProperty;
 
 import java.util.List;
-@Mapper(componentModel = "spring" )
+@Mapper(componentModel = "spring")
 public interface AmenityPropertyMapper {
     @Mapping(source = "amenity.id", target = "amenityId")
     @Mapping(source = "property.id", target = "propertyId")
