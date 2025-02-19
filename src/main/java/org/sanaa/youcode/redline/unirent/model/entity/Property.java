@@ -14,11 +14,12 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String title;
     private String address;
     private double price;
     private boolean available;
+    private String  description ;
+    private String Type ;
 
     @ManyToOne
     @JoinColumn(name = "landlord_id")

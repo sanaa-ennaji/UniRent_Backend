@@ -21,9 +21,10 @@ public class PropertyRequestDTO {
 
     private boolean available;
 
+    private String  description ;
+    private String Type;
     @NotNull
     private Long landlordId;
 
-    @NotNull
     private Long universityId;
 }
