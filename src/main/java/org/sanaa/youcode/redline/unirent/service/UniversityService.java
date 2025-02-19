@@ -31,7 +31,10 @@ public class UniversityService implements UniversityServiceI {
 
     @Override
     public List<UniversityResponseDTO> getAll() {
-        return List.of();
+        return universityRepository.findAll()
+            .stream()
+            .map(universityMapper::toResponseDTO)
+            .toList();
     }
 
     @Override
