@@ -1,10 +1,13 @@
 package org.sanaa.youcode.redline.unirent.service;
 
 import jakarta.transaction.Transactional;
+import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
 import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
 import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
+import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
 import org.springframework.stereotype.Service;
@@ -15,10 +18,12 @@ import java.util.List;
 @Transactional
 public class UserService implements UserServiceI {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
         this.userMapper = userMapper;
     }
 
@@ -33,10 +38,23 @@ public class UserService implements UserServiceI {
     public List<UserResponseDTO> getAllUsers() {
         return userMapper.toResponseDTOList(userRepository.findAll());
     }
+//    @Override
+//    public UserResponseDTO createUser(UserRequestDTO requestDTO) {
+//        AppUser user = userMapper.toEntity(requestDTO);
+//        return userMapper.toResponseDto(userRepository.save(user));
+//    }
 
     @Override
-    public UserResponseDTO createUser(UserRequestDTO requestDTO) {
-        AppUser user = userMapper.toEntity(requestDTO);
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
+        AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
+            .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+
+        AppUser user = userMapper.toEntity(userRequestDTO);
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setPhoneNumber(userRequestDTO.getPhoneNumber());
+        user.setRole(role);
         return userMapper.toResponseDto(userRepository.save(user));
     }
 
