@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UniversityRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UniversityResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.University;
 import org.sanaa.youcode.redline.unirent.model.mapper.UniversityMapper;
 import org.sanaa.youcode.redline.unirent.repository.UniversityRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UniversityServiceI;
@@ -39,8 +40,9 @@ public class UniversityService implements UniversityServiceI {
 
     @Override
     public UniversityResponseDTO create(UniversityRequestDTO requestDTO) {
-
-        return null;
+        University university = universityMapper.toEntity(requestDTO);
+        University savedUniversity = universityRepository.save(university);
+        return universityMapper.toResponseDTO(savedUniversity);
     }
 
     @Override
