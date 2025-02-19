@@ -47,11 +47,11 @@ public class UniversityService implements UniversityServiceI {
 
     @Override
     public UniversityResponseDTO update(Long id, UniversityRequestDTO requestDTO) {
-         answer = answerRepository.findById(id)
+      University university = universityRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Quiz not found with ID: " + id));
-        answerMapper.updateEntityFromRequest(answerRequestDTO , answer);
-        Answer updatedAnswer= answerRepository.save(answer);
-        return answerMapper.toResponseDTO(updatedAnswer);
+        universityMapper.updateEntityFromRequest(requestDTO , university);
+        University updatedUniversity= universityRepository.save(university);
+        return universityMapper.toResponseDTO(updatedUniversity);
     }
 
     @Override
