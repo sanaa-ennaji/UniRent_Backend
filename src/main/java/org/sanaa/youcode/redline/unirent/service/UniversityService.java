@@ -10,6 +10,7 @@ import org.sanaa.youcode.redline.unirent.service.ServiceI.UniversityServiceI;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,9 +24,9 @@ public class UniversityService implements UniversityServiceI {
     }
 
     @Override
-    public UniversityResponseDTO getById(Long id) {
+    public Optional<UniversityResponseDTO> getById(Long id) {
         return universityRepository.findById(id)
-            .map(universityMapper)
+            .map(universityMapper::toResponseDTO);
     }
 
     @Override

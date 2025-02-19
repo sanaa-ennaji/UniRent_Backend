@@ -4,10 +4,11 @@ import org.sanaa.youcode.redline.unirent.model.dto.Response.UniversityResponseDT
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface UniversityServiceI {
-    UniversityResponseDTO getById(Long id);
+    Optional<UniversityResponseDTO> getById(Long id);
     List<UniversityResponseDTO> getAll();
     UniversityResponseDTO create(UniversityRequestDTO requestDTO);
     UniversityResponseDTO update(Long id, UniversityRequestDTO requestDTO);
