@@ -17,12 +17,9 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> authz
-            .requestMatchers("/api/roles/**", "/api/users/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
-            .requestMatchers(HttpMethod.PUT, "/api/**").permitAll()
-            .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
-            .anyRequest().authenticated()
+                .requestMatchers("/api/roles/**").permitAll()
+                .requestMatchers("/api/users/**").permitAll()
+                .anyRequest().authenticated()
             );
         return http.build();
     }
