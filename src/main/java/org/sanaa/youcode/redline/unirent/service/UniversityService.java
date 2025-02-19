@@ -24,8 +24,8 @@ public class UniversityService implements UniversityServiceI {
 
     @Override
     public UniversityResponseDTO getById(Long id) {
-
-        return null;
+        return universityRepository.findById(id)
+            .map(universityMapper)
     }
 
     @Override
@@ -35,7 +35,7 @@ public class UniversityService implements UniversityServiceI {
 
     @Override
     public UniversityResponseDTO create(UniversityRequestDTO requestDTO) {
-        
+
         return null;
     }
 
