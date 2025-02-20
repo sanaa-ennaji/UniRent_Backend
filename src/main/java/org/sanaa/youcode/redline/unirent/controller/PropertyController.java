@@ -50,6 +50,6 @@ private PropertyServiceI propertyServiceI;
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         propertyServiceI.delete(id);
-        return ResponseEntity.ok("Answer was deleted");
+        return ResponseEntity.ok(" property was deleted");
     }
 }
