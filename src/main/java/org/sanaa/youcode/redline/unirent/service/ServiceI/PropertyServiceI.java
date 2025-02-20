@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PropertyServiceI {
-    Optional<PropertyResponseDTO> getPropertyById(Long id);
-    List<PropertyResponseDTO> getAllProperties();
-    PropertyResponseDTO createProperty(PropertyRequestDTO requestDTO);
-    PropertyResponseDTO updateProperty(Long id, PropertyRequestDTO requestDTO);
-    void deleteProperty(Long id);
+    Optional<PropertyResponseDTO> getById(Long id);
+    List<PropertyResponseDTO> getAll();
+    PropertyResponseDTO create(PropertyRequestDTO requestDTO);
+    PropertyResponseDTO update(Long id, PropertyRequestDTO requestDTO);
+    void delete(Long id);
 }

@@ -10,6 +10,7 @@ import org.sanaa.youcode.redline.unirent.service.ServiceI.PropertyServiceI;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,25 +24,25 @@ public class PropertyService implements PropertyServiceI {
     }
 
     @Override
-    public PropertyResponseDTO getPropertyById(Long id) {
-        Property property = propertyRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Property not found"));
-        return propertyMapper.toResponseDTO(property);
+    public Optional<PropertyResponseDTO> getById(Long id) {
+        return propertyRepository.findById(id)
+            .map(propertyMapper::toResponseDTO);
     }
 
+
     @Override
-    public List<PropertyResponseDTO> getAllProperties() {
+    public List<PropertyResponseDTO> getAll() {
         return propertyMapper.toResponseDTOList(propertyRepository.findAll());
     }
 
     @Override
-    public PropertyResponseDTO createProperty(PropertyRequestDTO requestDTO) {
+    public PropertyResponseDTO create(PropertyRequestDTO requestDTO) {
         Property property = propertyMapper.toEntity(requestDTO);
         return propertyMapper.toResponseDTO(propertyRepository.save(property));
     }
 
     @Override
-    public PropertyResponseDTO updateProperty(Long id, PropertyRequestDTO requestDTO) {
+    public PropertyResponseDTO update(Long id, PropertyRequestDTO requestDTO) {
         Property property = propertyRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Property not found"));
         propertyMapper.updateEntityFromRequest(requestDTO, property);
@@ -49,7 +50,7 @@ public class PropertyService implements PropertyServiceI {
     }
 
     @Override
-    public void deleteProperty(Long id) {
+    public void delete(Long id) {
         propertyRepository.deleteById(id);
     }
 }

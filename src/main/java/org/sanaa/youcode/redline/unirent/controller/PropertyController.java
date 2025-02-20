@@ -24,33 +24,32 @@ public class PropertyController {
 private PropertyServiceI propertyServiceI;
     @PostMapping
     public ResponseEntity<PropertyResponseDTO> create(@Valid @RequestBody PropertyRequestDTO RequestDTO) {
-        PropertyResponseDTO propertyResponse = propertyServiceI.createProperty(RequestDTO);
+        PropertyResponseDTO propertyResponse = propertyServiceI.create(RequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyResponse);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PropertyResponseDTO> update(@PathVariable Long id, @Valid @RequestBody PropertyRequestDTO RequestDTO) {
-        PropertyResponseDTO updatedProperty = propertyServiceI.updateProperty(id, RequestDTO);
+        PropertyResponseDTO updatedProperty = propertyServiceI.update(id, RequestDTO);
         return ResponseEntity.ok(updatedProperty);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PropertyResponseDTO> findById(@PathVariable Long id) {
-        return propertyServiceI.getPropertyById(id)
+        return propertyServiceI.getById(id)
             .map(ResponseEntity::ok)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "property not found"));
     }
 
     @GetMapping
-    public ResponseEntity<List<UniversityResponseDTO>> findAll() {
-        List<UniversityResponseDTO> answers = universityService.getAll();
-        return ResponseEntity.ok(answers);
+    public ResponseEntity<List<PropertyResponseDTO>> findAll() {
+        List<PropertyResponseDTO> properties = propertyServiceI.getAll();
+        return ResponseEntity.ok(properties);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        universityService.delete(id);
+        propertyServiceI.delete(id);
         return ResponseEntity.ok("Answer was deleted");
     }
-}
 }
