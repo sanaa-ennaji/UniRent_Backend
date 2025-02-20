@@ -3,6 +3,8 @@ package org.sanaa.youcode.redline.unirent.controller;
 import jakarta.validation.Valid;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.PropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.PropertyResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.Amenity;
+import org.sanaa.youcode.redline.unirent.service.ServiceI.AmenityServiceI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +17,12 @@ import java.util.List;
 @Validated
 @RequestMapping("/api/amenity")
 public class AmenityController {
+
+    private AmenityServiceI amenityServiceI;
+
     @PostMapping
     public ResponseEntity<PropertyResponseDTO> create(@Valid @RequestBody PropertyRequestDTO RequestDTO) {
-        PropertyResponseDTO propertyResponse = propertyServiceI.create(RequestDTO);
+        PropertyResponseDTO propertyResponse = amenityServiceI.create(RequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyResponse);
     }
 
