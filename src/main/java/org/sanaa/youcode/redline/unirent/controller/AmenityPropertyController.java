@@ -1,6 +1,6 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
-import lombok.RequiredArgsConstructor;
+
 import org.sanaa.youcode.redline.unirent.model.dto.Request.AmenityPropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.AmenityPropertyResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.AmenityPropertyService;
