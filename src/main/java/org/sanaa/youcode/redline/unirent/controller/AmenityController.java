@@ -1,9 +1,9 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
 import jakarta.validation.Valid;
-import org.sanaa.youcode.redline.unirent.model.dto.Request.PropertyRequestDTO;
-import org.sanaa.youcode.redline.unirent.model.dto.Response.PropertyResponseDTO;
-import org.sanaa.youcode.redline.unirent.model.entity.Amenity;
+import lombok.RequiredArgsConstructor;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.AmenityRequestDTO;
+import org.sanaa.youcode.redline.unirent.model.dto.Response.AmenityResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.AmenityServiceI;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,39 +15,40 @@ import java.util.List;
 
 @RestController
 @Validated
+@RequiredArgsConstructor
 @RequestMapping("/api/amenity")
 public class AmenityController {
 
     private AmenityServiceI amenityServiceI;
 
     @PostMapping
-    public ResponseEntity<PropertyResponseDTO> create(@Valid @RequestBody PropertyRequestDTO RequestDTO) {
-        PropertyResponseDTO propertyResponse = amenityServiceI.create(RequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(propertyResponse);
+    public ResponseEntity<AmenityResponseDTO> create(@Valid @RequestBody AmenityRequestDTO RequestDTO) {
+        AmenityResponseDTO amenityResponse = amenityServiceI.create(RequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(amenityResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PropertyResponseDTO> update(@PathVariable Long id, @Valid @RequestBody PropertyRequestDTO RequestDTO) {
-        PropertyResponseDTO updatedProperty = propertyServiceI.update(id, RequestDTO);
-        return ResponseEntity.ok(updatedProperty);
+    public ResponseEntity<AmenityResponseDTO> update(@PathVariable Long id, @Valid @RequestBody AmenityRequestDTO RequestDTO) {
+        AmenityResponseDTO updatedAmenity = amenityServiceI.update(id, RequestDTO);
+        return ResponseEntity.ok(updatedAmenity);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PropertyResponseDTO> findById(@PathVariable Long id) {
-        return propertyServiceI.getById(id)
+    public ResponseEntity<AmenityResponseDTO> findById(@PathVariable Long id) {
+        return amenityServiceI.getById(id)
             .map(ResponseEntity::ok)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "property not found"));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Amenity not found"));
     }
 
     @GetMapping
-    public ResponseEntity<List<PropertyResponseDTO>> findAll() {
-        List<PropertyResponseDTO> properties = propertyServiceI.getAll();
+    public ResponseEntity<List<AmenityResponseDTO>> findAll() {
+        List<AmenityResponseDTO> properties = amenityServiceI.getAll();
         return ResponseEntity.ok(properties);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        propertyServiceI.delete(id);
-        return ResponseEntity.ok(" property was deleted");
+    public ResponseEntity<String> delete(Long id) {
+        amenityServiceI.delete(id);
+        return ResponseEntity.ok(" Amenity was deleted");
     }
 }
