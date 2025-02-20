@@ -10,6 +10,7 @@ import org.sanaa.youcode.redline.unirent.service.ServiceI.AmenityServiceI;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,25 +24,24 @@ public class AmenityService implements AmenityServiceI {
     }
 
     @Override
-    public AmenityResponseDTO getAmenityById(Long id) {
-        Amenity amenity = amenityRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Amenity not found"));
-        return amenityMapper.toResponseDTO(amenity);
+    public Optional<AmenityResponseDTO> getById(Long id) {
+      return amenityRepository.findById(id)
+          .map(amenityMapper::toResponseDTO);
     }
 
     @Override
-    public List<AmenityResponseDTO> getAllAmenities() {
+    public List<AmenityResponseDTO> getAll() {
         return amenityMapper.toResponseDTOList(amenityRepository.findAll());
     }
 
     @Override
-    public AmenityResponseDTO createAmenity(AmenityRequestDTO requestDTO) {
+    public AmenityResponseDTO create(AmenityRequestDTO requestDTO) {
         Amenity amenity = amenityMapper.toEntity(requestDTO);
         return amenityMapper.toResponseDTO(amenityRepository.save(amenity));
     }
 
     @Override
-    public AmenityResponseDTO updateAmenity(Long id, AmenityRequestDTO requestDTO) {
+    public AmenityResponseDTO update(Long id, AmenityRequestDTO requestDTO) {
         Amenity amenity = amenityRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Amenity not found"));
         amenityMapper.updateEntityFromRequest(requestDTO, amenity);
@@ -49,7 +49,7 @@ public class AmenityService implements AmenityServiceI {
     }
 
     @Override
-    public void deleteAmenity(Long id) {
+    public void delete(Long id) {
         amenityRepository.deleteById(id);
     }
 }
