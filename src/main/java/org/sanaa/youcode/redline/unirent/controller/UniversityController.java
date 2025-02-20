@@ -24,22 +24,22 @@ public class UniversityController {
     private final UniversityService universityService;
 
     @PostMapping
-    public ResponseEntity<UniversityResponseDTO> create(@Valid @RequestBody UniversityRequestDTO answerRequestDTO) {
-        UniversityResponseDTO answerResponse = universityServiceI.create(answerRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(answerResponse);
+    public ResponseEntity<UniversityResponseDTO> create(@Valid @RequestBody UniversityRequestDTO RequestDTO) {
+        UniversityResponseDTO universityResponse = universityServiceI.create(RequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(universityResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UniversityResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UniversityRequestDTO answerRequestDTO) {
-        UniversityResponseDTO updatedAnswer = universityService.update(id, answerRequestDTO);
-        return ResponseEntity.ok(updatedAnswer);
+    public ResponseEntity<UniversityResponseDTO> update(@PathVariable Long id, @Valid @RequestBody UniversityRequestDTO RequestDTO) {
+        UniversityResponseDTO updatedUniversity = universityService.update(id, RequestDTO);
+        return ResponseEntity.ok(updatedUniversity);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UniversityResponseDTO> findById(@PathVariable Long id) {
         return universityService.getById(id)
             .map(ResponseEntity::ok)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Answer not found"));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "university not found"));
     }
 
     @GetMapping
@@ -51,6 +51,6 @@ public class UniversityController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         universityService.delete(id);
-        return ResponseEntity.ok("Answer was deleted");
+        return ResponseEntity.ok("university was deleted");
     }
 }
