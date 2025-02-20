@@ -2,11 +2,8 @@ package org.sanaa.youcode.redline.unirent.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.sanaa.youcode.redline.unirent.model.dto.Request.TransactionRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UniversityRequestDTO;
-import org.sanaa.youcode.redline.unirent.model.dto.Response.TransactionResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UniversityResponseDTO;
-import org.sanaa.youcode.redline.unirent.model.entity.University;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UniversityServiceI;
 import org.sanaa.youcode.redline.unirent.service.UniversityService;
 import org.springframework.http.HttpStatus;
