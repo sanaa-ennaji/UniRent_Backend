@@ -20,14 +20,13 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8888 # Replace with your issuer URI
-          jwk-set-uri: http://localhost:8888/.well-known/jwks.json # Replace with your JWK Set URI
+          issuer-uri: http://localhost:8888 
+          jwk-set-uri: http://localhost:8888/.well-known/jwks.json
 
 # JWT Configuration
 jwt:
   secret: aGi45u87K34m/25Cnmm0Ppuu31Lc7/Gb+tFbZQxkXSs=
   expiration: 86400000
-
 
 logging:
   level:
