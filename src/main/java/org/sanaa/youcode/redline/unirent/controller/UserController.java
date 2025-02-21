@@ -1,9 +1,13 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.LoginRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
+import org.sanaa.youcode.redline.unirent.model.dto.Response.LoginResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +34,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> Register(@RequestBody UserRequestDTO requestDTO) {
-        return ResponseEntity.ok(userService.createUser(requestDTO));
+        UserResponseDTO user = userService.createUser(requestDTO);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -44,14 +49,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<UserResponseDTO> loginUser(@RequestBody LoginRequestDTO loginRequestDTO) {
-//        return ResponseEntity.ok(userService.loginUser(loginRequestDTO));
-//    }
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO requestDTO) {
-//        return ResponseEntity.ok(userService.registerUser(requestDTO));
-//    }
+    @PostMapping("/public/login")
+    public ResponseEntity<LoginResponseDTO> createAppUser(@Valid @RequestBody LoginRequestDTO requestLoginDTO) {
+        LoginResponseDTO login = userService.login(requestLoginDTO);
+        return new ResponseEntity<>(login, HttpStatus.OK);
+    }
+
+
 }
 
