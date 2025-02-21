@@ -3,6 +3,7 @@ package org.sanaa.youcode.redline.unirent.service;
 import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.exception.DuplicatedException;
 import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.ChangePasswordDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
@@ -11,6 +12,10 @@ import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -75,8 +80,21 @@ public class UserService implements UserServiceI {
         userRepository.deleteById(id);
     }
 
-    public UserResponseDTO login (String email , String password){
-        AppUser user = userRepository.findByEmail(email)
+
+    @Override
+    public void changePassword(ChangePasswordDTO changePasswordDTO) {
+        if(changePasswordDTO.getOldPassword().equals(changePasswordDTO.getNewPassword())) {
+            throw new BadCredentialsException("Le nouveau mot de passe ne peut pas être identique à l'ancien mot de passe.");
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userAuth = authentication.getName();
+        AppUser user = userRepository.findByUsername(userAuth)
+            .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+        if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
+            throw new BadCredentialsException("Ancien mot de passe incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        appUserRepository.save(user);
     }
 
 }
