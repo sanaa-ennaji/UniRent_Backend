@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.service;
 
 import jakarta.transaction.Transactional;
+import org.sanaa.youcode.redline.unirent.exception.DuplicatedException;
 import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
@@ -44,7 +45,7 @@ public class UserService implements UserServiceI {
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         if (userRepository.existsByEmail(userRequestDTO.getEmail())){
-            throw  new DuplicatedException("email Alreaday exists")
+            throw  new DuplicatedException("email alreaday exists");
         }
         AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
             .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
