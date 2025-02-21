@@ -5,7 +5,9 @@ import org.sanaa.youcode.redline.unirent.exception.DuplicatedException;
 import org.sanaa.youcode.redline.unirent.exception.InvalidCredentialsException;
 import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.ChangePasswordDTO;
+import org.sanaa.youcode.redline.unirent.model.dto.Request.LoginRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
+import org.sanaa.youcode.redline.unirent.model.dto.Response.LoginResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
 import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
@@ -14,6 +16,7 @@ import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -82,14 +85,22 @@ public class UserService implements UserServiceI {
     }
 
 
-    public UserResponseDTO login(String email, String password) {
-        AppUser user = userRepository.findByEmail(email)
-            .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO loginRequest) {
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new InvalidCredentialsException("Invalid password");
-        }
-        return userMapper.toResponseDto(user);
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                loginRequest.getEmail(),
+                loginRequest.getPassword())
+        );
+
+        String token = jwtUtils.generateToken(loginRequest.getEmail());
+        ResponseLoginDTO response = new ResponseLoginDTO();
+        response.setToken(token);
+        response.setEmail(authentication.getName());
+        response.setRole(authentication.getAuthorities().iterator().next().getAuthority());
+        return response;
+
     }
 
 
