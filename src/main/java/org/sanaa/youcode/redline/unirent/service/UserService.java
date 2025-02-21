@@ -44,7 +44,7 @@ public class UserService implements UserServiceI {
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         if (userRepository.existsByEmail(userRequestDTO.getEmail())){
-            throw  new DuplicatedResourceException("email Alreaday exists")
+            throw  new DuplicatedException("email Alreaday exists")
         }
         AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
             .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
