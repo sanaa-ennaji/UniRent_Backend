@@ -20,13 +20,21 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8888
-          jwk-set-uri: http://localhost:8888/.well-known/jwks.json
+          issuer-uri: http://localhost:8888 # Replace with your issuer URI
+          jwk-set-uri: http://localhost:8888/.well-known/jwks.json # Replace with your JWK Set URI
+
+# JWT Configuration
+jwt:
+  secret: your-secret-key # Replace with a secure secret key
+  expiration: 86400000
+
+
 logging:
   level:
     org.springframework.security: TRACE
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
+# Server Configuration
 server:
   port: 8888
