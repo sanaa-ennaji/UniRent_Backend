@@ -54,7 +54,10 @@ public class UserService implements UserServiceI {
         AppUser user = userMapper.toEntity(userRequestDTO);
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
-        user.setPassword(userRequestDTO.getPassword());
+        
+        String encodedPassword = passwordEncoder.encode(userRequestDTO.getPassword());
+        user.setPassword(encodedPassword);
+
         user.setPhoneNumber(userRequestDTO.getPhoneNumber());
         user.setRole(role);
         return userMapper.toResponseDto(userRepository.save(user));
