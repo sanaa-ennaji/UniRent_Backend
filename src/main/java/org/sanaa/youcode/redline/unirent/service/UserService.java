@@ -81,6 +81,17 @@ public class UserService implements UserServiceI {
     }
 
 
+    public UserResponseDTO login(String email, String password) {
+        AppUser user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new InvalidCredentialsException("Invalid password");
+        }
+        return userMapper.toResponseDto(user);
+    }
+
+
     @Override
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
         if(changePasswordDTO.getOldPassword().equals(changePasswordDTO.getNewPassword())) {
@@ -94,7 +105,7 @@ public class UserService implements UserServiceI {
             throw new BadCredentialsException("Ancien mot de passe incorrect");
         }
         user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
-        appUserRepository.save(user);
+        userRepository.save(user);
     }
 
 }
