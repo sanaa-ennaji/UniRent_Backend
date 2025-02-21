@@ -2,7 +2,6 @@ package org.sanaa.youcode.redline.unirent.service;
 
 import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.exception.DuplicatedException;
-import org.sanaa.youcode.redline.unirent.exception.InvalidCredentialsException;
 import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.ChangePasswordDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.LoginRequestDTO;
@@ -14,7 +13,9 @@ import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
 import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
+import org.sanaa.youcode.redline.unirent.security.config.JwtUtils;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,12 +33,15 @@ public class UserService implements UserServiceI {
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public final AuthenticationManager authenticationManager;
+    public final JwtUtils jwtUtils;
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -95,7 +99,7 @@ public class UserService implements UserServiceI {
         );
 
         String token = jwtUtils.generateToken(loginRequest.getEmail());
-        ResponseLoginDTO response = new ResponseLoginDTO();
+        LoginResponseDTO response = new LoginResponseDTO();
         response.setToken(token);
         response.setEmail(authentication.getName());
         response.setRole(authentication.getAuthorities().iterator().next().getAuthority());
