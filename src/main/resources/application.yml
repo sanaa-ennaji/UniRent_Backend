@@ -25,7 +25,7 @@ spring:
 
 # JWT Configuration
 jwt:
-  secret: your-secret-key # Replace with a secure secret key
+  secret: aGi45u87K34m/25Cnmm0Ppuu31Lc7/Gb+tFbZQxkXSs=
   expiration: 86400000
 
 
