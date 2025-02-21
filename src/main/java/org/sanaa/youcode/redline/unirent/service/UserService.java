@@ -75,4 +75,8 @@ public class UserService implements UserServiceI {
         userRepository.deleteById(id);
     }
 
+    public UserResponseDTO login (String email , String password){
+        AppUser user = userRepository.findByEmail(email)
+    }
+
 }
