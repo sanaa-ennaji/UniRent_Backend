@@ -11,6 +11,7 @@ import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class UserService implements UserServiceI {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
