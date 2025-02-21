@@ -10,6 +10,7 @@ import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.UserServiceI;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class UserService implements UserServiceI {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
@@ -38,12 +40,6 @@ public class UserService implements UserServiceI {
     public List<UserResponseDTO> getAllUsers() {
         return userMapper.toResponseDTOList(userRepository.findAll());
     }
-//    @Override
-//    public UserResponseDTO createUser(UserRequestDTO requestDTO) {
-//        AppUser user = userMapper.toEntity(requestDTO);
-//        return userMapper.toResponseDto(userRepository.save(user));
-//    }
-
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
