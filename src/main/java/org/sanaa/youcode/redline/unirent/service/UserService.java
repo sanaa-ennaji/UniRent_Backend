@@ -2,6 +2,7 @@ package org.sanaa.youcode.redline.unirent.service;
 
 import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.exception.DuplicatedException;
+import org.sanaa.youcode.redline.unirent.exception.InvalidCredentialsException;
 import org.sanaa.youcode.redline.unirent.exception.ResourceNotFoundException;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.ChangePasswordDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
@@ -107,5 +108,7 @@ public class UserService implements UserServiceI {
         user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
         userRepository.save(user);
     }
+
+
 
 }
