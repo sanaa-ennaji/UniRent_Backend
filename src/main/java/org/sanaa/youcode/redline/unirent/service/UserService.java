@@ -58,10 +58,10 @@ public class UserService implements UserServiceI {
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
         if (userRepository.existsByEmail(userRequestDTO.getEmail())){
-            throw  new DuplicatedException("email alreaday exists");
+            throw  new DuplicatedException("email already exists");
         }
         AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
-            .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("role not found"));
 
         AppUser user = userMapper.toEntity(userRequestDTO);
         user.setName(userRequestDTO.getName());
@@ -115,7 +115,7 @@ public class UserService implements UserServiceI {
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userAuth = authentication.getName();
-        AppUser user = userRepository.findByUsername(userAuth)
+        AppUser user = userRepository.findByEmail(userAuth)
             .orElseThrow(() -> new UsernameNotFoundException("user not found"));
         if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
             throw new BadCredentialsException("password incorrect");
