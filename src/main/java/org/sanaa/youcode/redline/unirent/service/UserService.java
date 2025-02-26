@@ -111,14 +111,14 @@ public class UserService implements UserServiceI {
     @Override
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
         if(changePasswordDTO.getOldPassword().equals(changePasswordDTO.getNewPassword())) {
-            throw new BadCredentialsException("Le nouveau mot de passe ne peut pas être identique à l'ancien mot de passe.");
+            throw new BadCredentialsException("The new password can't be like the oldest password.");
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userAuth = authentication.getName();
         AppUser user = userRepository.findByUsername(userAuth)
-            .orElseThrow(() -> new UsernameNotFoundException("Utilisateur non trouvé"));
+            .orElseThrow(() -> new UsernameNotFoundException("user not found"));
         if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Ancien mot de passe incorrect");
+            throw new BadCredentialsException("password incorrect");
         }
         user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
         userRepository.save(user);
