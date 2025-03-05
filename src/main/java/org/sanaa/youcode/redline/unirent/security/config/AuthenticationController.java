@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.security.config;
 
 import org.sanaa.youcode.redline.unirent.model.dto.Request.LoginRequestDTO;
+import org.sanaa.youcode.redline.unirent.security.AuthenticationResponse;
 import org.sanaa.youcode.redline.unirent.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

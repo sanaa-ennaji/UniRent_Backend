@@ -30,7 +30,12 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/roles/**").permitAll()
+                .requestMatchers("/api/users/**").permitAll()
                 .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/api/universities/**").permitAll()
+                .requestMatchers("/api/properties/**").permitAll()
+                .requestMatchers("/api/amenity/**").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
