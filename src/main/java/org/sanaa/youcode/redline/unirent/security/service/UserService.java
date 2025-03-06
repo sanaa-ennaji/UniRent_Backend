@@ -1,30 +1,72 @@
 package org.sanaa.youcode.redline.unirent.security.service;
 
+import org.sanaa.youcode.redline.unirent.model.dto.Request.ChangePasswordDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
 import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
+import org.sanaa.youcode.redline.unirent.model.entity.University;
+import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
+import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
+import org.sanaa.youcode.redline.unirent.repository.UniversityRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserService {
+public class UserService  implements  UserServiceI{
 
-    @Autowired
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
-    @Autowired
+    private UniversityRepository universityRepository;
+
     private PasswordEncoder passwordEncoder;
 
+    private UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, UniversityRepository universityRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.universityRepository = universityRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
-        AppUser user = new AppUser();
-        user.setName(userRequestDTO.getName());
-        user.setEmail(userRequestDTO.getEmail());
+        AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
+            .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        University university = universityRepository.findById(userRequestDTO.getUniversityId())
+            .orElseThrow(() -> new RuntimeException("University not found"));
+        AppUser user = userMapper.toEntity(userRequestDTO);
+        user.setRole(role);
+        user.setUniversity(university);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
-        user.setPhoneNumber(userRequestDTO.getPhoneNumber());
         AppUser savedUser = userRepository.save(user);
-        return new UserResponseDTO(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getPhoneNumber(), savedUser.getRole().getId(), savedUser.getRole().getRoleName());
+        return userMapper.toResponseDto(savedUser);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAllUsers() {
+        return List.of();
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public UserResponseDTO updateUser(long id, UserRequestDTO userRequestDTO) {
+        return null;
+    }
+
+    @Override
+    public void changePassword(ChangePasswordDTO changePasswordDTO) {
+
     }
 
     public UserResponseDTO getUserById(Long id) {
