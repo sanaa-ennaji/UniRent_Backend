@@ -1,4 +1,4 @@
-package org.sanaa.youcode.redline.unirent.security.config;
+package org.sanaa.youcode.redline.unirent.security.service;
 
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;

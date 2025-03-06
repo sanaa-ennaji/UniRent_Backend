@@ -1,8 +1,9 @@
-package org.sanaa.youcode.redline.unirent.security.config;
+package org.sanaa.youcode.redline.unirent.security;
 
 import jakarta.validation.Valid;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
+import org.sanaa.youcode.redline.unirent.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
