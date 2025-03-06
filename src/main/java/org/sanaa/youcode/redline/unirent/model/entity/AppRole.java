@@ -7,7 +7,6 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "roles")
 public class AppRole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
