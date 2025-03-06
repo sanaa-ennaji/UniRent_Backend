@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class UserService  implements  UserServiceI{
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    private UniversityRepository universityRepository;
+    private final UniversityRepository universityRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     private UserMapper userMapper;
 
@@ -68,9 +68,10 @@ public class UserService  implements  UserServiceI{
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
 
     }
-
+    @Override
     public UserResponseDTO getUserById(Long id) {
-        AppUser user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        return new UserResponseDTO(user.getId(), user.getName(), user.getEmail(), user.getPhoneNumber(), user.getRole().getId(), user.getRole().getRoleName());
+        AppUser user = userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        return userMapper.toResponseDto(user);
     }
 }

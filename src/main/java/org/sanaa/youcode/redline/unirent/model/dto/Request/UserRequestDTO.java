@@ -23,7 +23,7 @@ public class UserRequestDTO {
     private String password;
 
     private String phoneNumber;
-
+    private String roleName;
     private Long roleId;
     private long universityId;
 }
