@@ -1,5 +1,6 @@
 package org.sanaa.youcode.redline.unirent.model.dto.Request;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,6 +15,7 @@ public class UserRequestDTO {
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
+    @Column(unique = true, nullable = false)
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email cannot be blank")
     private String email;
