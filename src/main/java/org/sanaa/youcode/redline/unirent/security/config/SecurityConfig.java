@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/roles/**").permitAll()
                 .requestMatchers("/api/users/register").permitAll()
                 .requestMatchers("/api/users/**").permitAll()
-                .requestMatchers("/authenticate").permitAll()
+                .requestMatchers("/api/authenticate").permitAll()
                 .requestMatchers("/api/universities/**").permitAll()
                 .requestMatchers("/api/properties/**").permitAll()
                 .requestMatchers("/api/amenity/**").permitAll()
