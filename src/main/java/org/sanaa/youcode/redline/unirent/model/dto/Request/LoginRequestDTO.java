@@ -1,10 +1,10 @@
 package org.sanaa.youcode.redline.unirent.model.dto.Request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginRequestDTO {
     private String email;
     private String password;
