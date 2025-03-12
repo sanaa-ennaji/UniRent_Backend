@@ -21,9 +21,9 @@ public class AppUser {
     @JoinColumn(name = "role_id")
     private AppRole role;
 
-    @ManyToOne
-    @JoinColumn(name = "university_id")
-    private University university;
+//    @ManyToOne
+//    @JoinColumn(name = "university_id")
+//    private University university;
 
     @OneToMany(mappedBy = "student")
     private List<Booking> bookings ;

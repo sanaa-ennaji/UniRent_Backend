@@ -24,8 +24,8 @@ public class University {
     @OneToMany(mappedBy = "university")
     private List<Property> properties;
 
-    @OneToMany(mappedBy = "university")
-    private List<AppUser>  users;
+//    @OneToMany(mappedBy = "university")
+//    private List<AppUser>  users;
 
 
 

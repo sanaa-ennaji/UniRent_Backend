@@ -27,5 +27,5 @@ public class UserRequestDTO {
     private String phoneNumber;
     private String roleName;
     private Long roleId;
-    private long universityId;
+//    private long universityId;
 }
