@@ -18,4 +18,5 @@ public class UniversityRequestDTO {
     private Double latitude;
     @NotNull
     private Double longitude;
+
 }
