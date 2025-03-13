@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 @Table(name = "universities")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class University {
     @jakarta.persistence.Id
     @Id
@@ -41,6 +43,7 @@ public class University {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
 
 }
 
