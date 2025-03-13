@@ -1,5 +1,7 @@
 package org.sanaa.youcode.redline.unirent.model.dto.Request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UniversityRequestDTO {
+    @NotBlank
     private String name;
+    @NotBlank
     private String city;
-    private String contactInfo;
+    @NotNull
+    private Double latitude;
+    @NotNull
+    private Double longitude;
 }
