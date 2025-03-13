@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.security;
 
 import org.sanaa.youcode.redline.unirent.model.dto.Request.LoginRequestDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
 import org.sanaa.youcode.redline.unirent.security.config.JwtUtil;
 import org.sanaa.youcode.redline.unirent.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class AuthenticationController {
         } catch (BadCredentialsException e) {
             throw new Exception("Incorrect username or password", e);
         }
-
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        AppUser appUser = userDetailsService.getAppUserByEmail(authenticationRequest.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, appUser.getEmail(), appUser.getRole().getRoleName()));
     }
 }

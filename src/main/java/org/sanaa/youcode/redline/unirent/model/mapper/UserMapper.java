@@ -6,6 +6,7 @@ import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
 import org.mapstruct.Mapping;
+import org.sanaa.youcode.redline.unirent.security.AuthenticationResponse;
 
 import java.util.List;
 
@@ -23,4 +24,7 @@ public interface UserMapper {
     List<AppUser> toEntityList(List<UserRequestDTO> requestDTOs);
 
     void updateEntityFromRequest(UserRequestDTO amenityRequestDTO, @MappingTarget AppUser appUser);
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "role.roleName", target = "roleName")
+    AuthenticationResponse toAuthenticationResponse(AppUser appUser);
 }
