@@ -17,9 +17,10 @@ public class University {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
     private String city;
+    private Double latitude;
+    private Double longitude;
 
    // The properties and universities fields are initialized as new ArrayList<>()
     // to avoid NullPointerException.
