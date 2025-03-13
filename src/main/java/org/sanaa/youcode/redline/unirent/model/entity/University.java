@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,15 +20,17 @@ public class University {
 
     private String name;
     private String city;
-    private String contactInfo;
 
-    @OneToMany(mappedBy = "university")
-    private List<Property> properties;
+   // The properties and universities fields are initialized as new ArrayList<>()
+    // to avoid NullPointerException.
 
-//    @OneToMany(mappedBy = "university")
-//    private List<AppUser>  users;
-
-
+    @ManyToMany
+    @JoinTable(
+        name = "university_property",
+        joinColumns = @JoinColumn(name = "university_id"),
+        inverseJoinColumns = @JoinColumn(name = "property_id")
+    )
+    private List<Property> properties = new ArrayList<>();
 
 }
 

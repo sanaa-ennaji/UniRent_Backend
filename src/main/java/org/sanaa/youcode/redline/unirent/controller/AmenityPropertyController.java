@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/api/amenity-properties")
-public class AmenityPropertyController {
+public class  AmenityPropertyController {
     private final AmenityPropertyService amenityPropertyService;
 
         public AmenityPropertyController(AmenityPropertyService amenityPropertyService) {

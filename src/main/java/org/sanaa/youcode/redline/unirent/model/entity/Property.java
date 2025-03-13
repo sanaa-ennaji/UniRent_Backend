@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,9 +26,8 @@ public class Property {
     @JoinColumn(name = "landlord_id")
     private AppUser landlord;
 
-    @ManyToOne
-    @JoinColumn(name = "university_id")
-    private University university;
+    @ManyToMany(mappedBy = "properties")
+    private List<University> universities = new ArrayList<>();
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
@@ -44,12 +44,3 @@ public class Property {
 
 }
 
-//    public void addImage(Image image) {
-//        images.add(image);
-//        image.setProperty(this);
-//    }
-//
-//    public void removeImage(Image image) {
-//        images.remove(image);
-//        image.setProperty(null);
-//    }
