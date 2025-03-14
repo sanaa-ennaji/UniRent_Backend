@@ -4,8 +4,10 @@ import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.PropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.PropertyResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.Property;
+import org.sanaa.youcode.redline.unirent.model.entity.University;
 import org.sanaa.youcode.redline.unirent.model.mapper.PropertyMapper;
 import org.sanaa.youcode.redline.unirent.repository.PropertyRepository;
+import org.sanaa.youcode.redline.unirent.repository.UniversityRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.PropertyServiceI;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ import java.util.Optional;
 public class PropertyService implements PropertyServiceI {
     private final PropertyRepository propertyRepository;
     private final PropertyMapper propertyMapper;
+    private final UniversityRepository  universityRepository;
 
-    public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper) {
+    public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper, UniversityRepository universityRepository) {
         this.propertyRepository = propertyRepository;
         this.propertyMapper = propertyMapper;
+        this.universityRepository = universityRepository;
     }
 
     @Override
@@ -38,8 +42,19 @@ public class PropertyService implements PropertyServiceI {
     @Override
     public PropertyResponseDTO create(PropertyRequestDTO requestDTO) {
         Property property = propertyMapper.toEntity(requestDTO);
-        return propertyMapper.toResponseDTO(propertyRepository.save(property));
+
+        if (requestDTO.getUniversityIds() != null && !requestDTO.getUniversityIds().isEmpty()) {
+            List<University> universities = universityRepository.findAllById(requestDTO.getUniversityIds());
+            property.setUniversities(universities);
+
+            for (University university : universities) {
+                university.getProperties().add(property);
+            }
+        }
+        Property savedProperty = propertyRepository.save(property);
+        return propertyMapper.toResponseDTO(savedProperty);
     }
+
 
     @Override
     public PropertyResponseDTO update(Long id, PropertyRequestDTO requestDTO) {
