@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +27,5 @@ public class PropertyRequestDTO {
     private String Type;
     @NotNull
     private Long landlordId;
-
-    private Long universityId;
+    private List<Long> universityIds;
 }

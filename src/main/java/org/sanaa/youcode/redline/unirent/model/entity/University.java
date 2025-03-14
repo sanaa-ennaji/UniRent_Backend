@@ -25,10 +25,10 @@ public class University {
     private String city;
     private Double latitude;
     private Double longitude;
-
-   // The properties and universities fields are initialized as new ArrayList<>()
-   // to avoid NullPointerException.
-
+    /**
+    The properties and universities fields are initialized as new ArrayList<>()
+   to avoid NullPointerException.
+    **/
     @ManyToMany
     @JoinTable(
         name = "university_property",
@@ -36,6 +36,8 @@ public class University {
         inverseJoinColumns = @JoinColumn(name = "property_id")
     )
     private List<Property> properties = new ArrayList<>();
+
+
 
     public University(String name, String city, Double latitude, Double longitude) {
         this.name = name;

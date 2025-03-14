@@ -19,16 +19,16 @@ public class UniversitySeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        List<UniversityRequestDTO> universities = List.of(
-            new UniversityRequestDTO("Université Mohammed V", "Rabat", 34.0224, -6.8341),
-            new UniversityRequestDTO("Université Cadi Ayyad", "Marrakech", 31.6342, -8.0089),
-            new UniversityRequestDTO("Université Ibn Tofail", "Kenitra", 34.2602, -6.5797),
-            new UniversityRequestDTO("Université Hassan II", "Casablanca", 33.5731, -7.5898),
-            new UniversityRequestDTO("Université Sidi Mohamed Ben Abdellah", "Fes", 34.0181, -5.0078)
-        );
-
-        universities.forEach(dto -> universityRepository.save(
-            new University(dto.getName(), dto.getCity(), dto.getLatitude(), dto.getLongitude())
-        ));
+//        List<UniversityRequestDTO> universities = List.of(
+//            new UniversityRequestDTO("Université Mohammed V", "Rabat", 34.0224, -6.8341),
+//            new UniversityRequestDTO("Université Cadi Ayyad", "Marrakech", 31.6342, -8.0089),
+//            new UniversityRequestDTO("Université Ibn Tofail", "Kenitra", 34.2602, -6.5797),
+//            new UniversityRequestDTO("Université Hassan II", "Casablanca", 33.5731, -7.5898),
+//            new UniversityRequestDTO("Université Sidi Mohamed Ben Abdellah", "Fes", 34.0181, -5.0078)
+//        );
+//
+//        universities.forEach(dto -> universityRepository.save(
+//            new University(dto.getName(), dto.getCity(), dto.getLatitude(), dto.getLongitude())
+//        ));
     }
 }
