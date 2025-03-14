@@ -10,9 +10,7 @@ import org.sanaa.youcode.redline.unirent.model.entity.Property;
 import java.util.List;
 @Mapper(componentModel = "spring" )
 public interface PropertyMapper {
-//    @Mapping(source = "user.id", target = "landlordId")
     PropertyResponseDTO toResponseDTO(Property entity) ;
-//    @Mapping(source = "landlordId", target = "user.id")
     Property toEntity(PropertyRequestDTO requestDTO);
     List<PropertyResponseDTO> toResponseDTOList (List<Property> entities);
     List<Property> toEntityList(List<PropertyRequestDTO> requestDTOs);
