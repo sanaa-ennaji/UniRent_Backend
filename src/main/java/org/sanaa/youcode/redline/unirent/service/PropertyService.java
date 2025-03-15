@@ -23,29 +23,32 @@ public class PropertyService implements PropertyServiceI {
     private final PropertyMapper propertyMapper;
     private final UniversityRepository universityRepository;
     private final UserRepository userRepository;
+    private final ImageService imageService;
 
-    public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper, UniversityRepository universityRepository, UserRepository userRepository) {
+    public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper, UniversityRepository universityRepository, UserRepository userRepository, ImageService imageService) {
         this.propertyRepository = propertyRepository;
         this.propertyMapper = propertyMapper;
         this.universityRepository = universityRepository;
         this.userRepository = userRepository;
+        this.imageService = imageService;
     }
 
     @Override
     public PropertyResponseDTO create(PropertyRequestDTO requestDTO) {
         Property property = propertyMapper.toEntity(requestDTO);
-
         List<University> universities = universityRepository.findAllById(requestDTO.getUniversityIds());
         if (universities.size() != requestDTO.getUniversityIds().size()) {
             throw new RuntimeException("Some university IDs do not exist");
         }
         property.setUniversities(universities);
-
         AppUser landlord = userRepository.findById(requestDTO.getLandlordId())
             .orElseThrow(() -> new RuntimeException("Landlord not found"));
         property.setLandlord(landlord);
-
         Property savedProperty = propertyRepository.save(property);
+        if (requestDTO.getImages() != null && !requestDTO.getImages().isEmpty()) {
+            imageService.uploadImages(requestDTO.getImages(), savedProperty.getId());
+        }
+
         return propertyMapper.toResponseDTO(savedProperty);
     }
 

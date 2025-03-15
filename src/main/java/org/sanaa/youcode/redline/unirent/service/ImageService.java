@@ -4,12 +4,14 @@ import jakarta.transaction.Transactional;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.ImageRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.ImageResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.Image;
+import org.sanaa.youcode.redline.unirent.model.entity.Property;
 import org.sanaa.youcode.redline.unirent.model.mapper.ImageMapper;
 import org.sanaa.youcode.redline.unirent.repository.ImageRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.ImageServiceI;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,9 +37,26 @@ public class ImageService implements ImageServiceI {
     }
 
     @Override
-    public ImageResponseDTO uploadImage(ImageRequestDTO requestDTO) {
+    public ImageResponseDTO uploadImage(ImageRequestDTO requestDTO, Long propertyId) {
         Image image = imageMapper.toEntity(requestDTO);
+        Property property = new Property();
+        property.setId(propertyId);
+        image.setProperty(property);
         return imageMapper.toResponseDTO(imageRepository.save(image));
+    }
+
+    @Override
+    public void uploadImages(List<ImageRequestDTO> imageDTOs, Long propertyId) {
+        List<Image> images = imageDTOs.stream()
+            .map(imageDTO -> {
+                Image image = imageMapper.toEntity(imageDTO);
+                Property property = new Property();
+                property.setId(propertyId);
+                image.setProperty(property);
+                return image;
+            })
+            .collect(Collectors.toList());
+        imageMapper.toResponseDTOList(imageRepository.saveAll(images));
     }
 
     @Override

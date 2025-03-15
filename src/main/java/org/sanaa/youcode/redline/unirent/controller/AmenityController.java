@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/amenity")
 public class AmenityController {
 
-    private AmenityServiceI amenityServiceI;
+    private final AmenityServiceI amenityServiceI;
 
     @PostMapping
     public ResponseEntity<AmenityResponseDTO> create(@Valid @RequestBody AmenityRequestDTO RequestDTO) {

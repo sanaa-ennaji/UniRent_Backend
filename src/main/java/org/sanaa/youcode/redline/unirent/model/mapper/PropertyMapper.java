@@ -29,6 +29,7 @@ public interface PropertyMapper {
             .map(University::getId)
             .collect(Collectors.toList());
     }
+    @Mapping(target = "images", ignore = true)
     Property toEntity(PropertyRequestDTO requestDTO);
     List<PropertyResponseDTO> toResponseDTOList (List<Property> entities);
     List<Property> toEntityList(List<PropertyRequestDTO> requestDTOs);

@@ -27,10 +27,6 @@ public class ImageController {
         return ResponseEntity.ok(imageService.getAllImages());
     }
 
-    @PostMapping
-    public ResponseEntity<ImageResponseDTO> createImage(@RequestBody ImageRequestDTO requestDTO) {
-        return ResponseEntity.ok(imageService.uploadImage(requestDTO));
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<ImageResponseDTO> updateImage(
