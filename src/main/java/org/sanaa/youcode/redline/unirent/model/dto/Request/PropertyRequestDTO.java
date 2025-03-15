@@ -28,4 +28,6 @@ public class PropertyRequestDTO {
     @NotNull
     private Long landlordId;
     private List<Long> universityIds;
+
+    private List<ImageRequestDTO> images;
 }
