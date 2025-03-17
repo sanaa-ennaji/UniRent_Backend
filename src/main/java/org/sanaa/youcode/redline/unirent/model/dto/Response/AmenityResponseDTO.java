@@ -13,6 +13,6 @@ import java.util.List;
 public class AmenityResponseDTO {
     private Long id;
     private String name;
-    private List<AmenityProperty> amenityProperties;
+//    private List<AmenityProperty> amenityProperties;
 
 }
