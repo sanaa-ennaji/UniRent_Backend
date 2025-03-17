@@ -46,7 +46,7 @@ public class ImageService implements ImageServiceI {
     }
 
     @Override
-    public void uploadImages(List<ImageRequestDTO> imageDTOs, Long propertyId) {
+    public List<ImageResponseDTO> uploadImages(List<ImageRequestDTO> imageDTOs, Long propertyId) {
         List<Image> images = imageDTOs.stream()
             .map(imageDTO -> {
                 Image image = imageMapper.toEntity(imageDTO);
@@ -56,7 +56,7 @@ public class ImageService implements ImageServiceI {
                 return image;
             })
             .collect(Collectors.toList());
-        imageMapper.toResponseDTOList(imageRepository.saveAll(images));
+        return imageMapper.toResponseDTOList(imageRepository.saveAll(images));
     }
 
     @Override

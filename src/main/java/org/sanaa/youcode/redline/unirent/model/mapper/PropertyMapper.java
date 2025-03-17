@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public interface PropertyMapper {
     @Mapping(target = "landlordId", source = "landlord.id")
     @Mapping(target = "universityIds", source = "universities", qualifiedByName = "mapUniversitiesToIds")
+    @Mapping(target = "amenityProperties", ignore = true)
     PropertyResponseDTO toResponseDTO(Property entity);
 
 
@@ -29,6 +30,7 @@ public interface PropertyMapper {
             .map(University::getId)
             .collect(Collectors.toList());
     }
+    @Mapping(target = "amenityProperties", ignore = true)
     @Mapping(target = "images", ignore = true)
     Property toEntity(PropertyRequestDTO requestDTO);
     List<PropertyResponseDTO> toResponseDTOList (List<Property> entities);

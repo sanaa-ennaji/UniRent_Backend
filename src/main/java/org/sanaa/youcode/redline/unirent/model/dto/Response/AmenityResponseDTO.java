@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AmenityResponseDTO {
-
     private Long id;
     private String name;
     private List<AmenityProperty> amenityProperties;
+
 }

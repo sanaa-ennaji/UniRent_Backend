@@ -9,7 +9,7 @@ public interface ImageServiceI {
     ImageResponseDTO getImageById(Long id);
     List<ImageResponseDTO> getAllImages();
     ImageResponseDTO uploadImage(ImageRequestDTO requestDTO, Long propertyId);
-    void uploadImages(List<ImageRequestDTO> imageDTOs, Long propertyId);
+    List<ImageResponseDTO> uploadImages(List<ImageRequestDTO> imageDTOs, Long propertyId);
     ImageResponseDTO updateImage(Long id, ImageRequestDTO requestDTO);
     void deleteImage(Long id);
 }

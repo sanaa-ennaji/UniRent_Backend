@@ -13,10 +13,8 @@ public class AmenityPropertyRequestDTO {
     @NotNull
     @Min(0)
     private Integer quantity;
-
-    @NotNull
-    private Long propertyId;
-
+   // @NotNull
+//    private Long propertyId;
     @NotNull
     private Long amenityId;
 }
