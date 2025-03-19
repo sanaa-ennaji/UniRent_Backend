@@ -35,8 +35,13 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
-    private List<AmenityProperty> amenityProperties;
+    @ManyToMany
+    @JoinTable(
+        name = "property_amenity",
+        joinColumns = @JoinColumn(name = "property_id"),
+        inverseJoinColumns = @JoinColumn(name = "amenity_id")
+    )
+    private List<Amenity> amenities = new ArrayList<>();
 
     @OneToMany(mappedBy = "property")
     private List<Booking> bookings;

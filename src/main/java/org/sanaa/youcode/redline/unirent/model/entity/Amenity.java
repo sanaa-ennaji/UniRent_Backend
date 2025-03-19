@@ -3,6 +3,7 @@ package org.sanaa.youcode.redline.unirent.model.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,8 @@ public class Amenity {
 
     private String name;
 
-    @OneToMany(mappedBy = "amenity", cascade = CascadeType.ALL)
-    private List<AmenityProperty> amenityProperties;
+    @ManyToMany(mappedBy = "amenities")
+    private List<Property> properties = new ArrayList<>();
+
 
 }

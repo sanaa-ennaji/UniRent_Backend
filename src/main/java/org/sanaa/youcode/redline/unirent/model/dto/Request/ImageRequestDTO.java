@@ -12,6 +12,4 @@ public class ImageRequestDTO {
     @NotBlank
     private String imageUrl;
 
-//    @NotNull
-//    private Long propertyId;
 }

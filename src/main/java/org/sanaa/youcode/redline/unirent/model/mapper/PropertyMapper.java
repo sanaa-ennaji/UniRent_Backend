@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.PropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.PropertyResponseDTO;
+import org.sanaa.youcode.redline.unirent.model.entity.Image;
 import org.sanaa.youcode.redline.unirent.model.entity.Property;
 import org.sanaa.youcode.redline.unirent.model.entity.University;
 
@@ -13,13 +14,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring" )
+@Mapper(componentModel = "spring")
 public interface PropertyMapper {
     @Mapping(target = "landlordId", source = "landlord.id")
+    @Mapping(target = "landlordName", source = "landlord.name")
     @Mapping(target = "universityIds", source = "universities", qualifiedByName = "mapUniversitiesToIds")
-    @Mapping(target = "amenityProperties", ignore = true)
+    @Mapping(target = "imageUrls", source = "images", qualifiedByName = "mapImagesToUrls")
     PropertyResponseDTO toResponseDTO(Property entity);
-
 
     @Named("mapUniversitiesToIds")
     default List<Long> mapUniversitiesToIds(List<University> universities) {
@@ -30,10 +31,22 @@ public interface PropertyMapper {
             .map(University::getId)
             .collect(Collectors.toList());
     }
+
+
+    @Named("mapImagesToUrls")
+    default List<String> mapImagesToUrls(List<Image> images) {
+        if (images == null) {
+            return Collections.emptyList();
+        }
+        return images.stream()
+            .map(Image::getImageUrl)
+            .collect(Collectors.toList());
+    }
+
     @Mapping(target = "amenityProperties", ignore = true)
     @Mapping(target = "images", ignore = true)
     Property toEntity(PropertyRequestDTO requestDTO);
-    List<PropertyResponseDTO> toResponseDTOList (List<Property> entities);
+    List<PropertyResponseDTO> toResponseDTOList(List<Property> entities);
     List<Property> toEntityList(List<PropertyRequestDTO> requestDTOs);
     void updateEntityFromRequest(PropertyRequestDTO propertyRequestDTO, @MappingTarget Property property);
 }
