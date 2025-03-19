@@ -35,28 +35,38 @@ public class PropertyService implements PropertyServiceI {
 
     @Override
     public PropertyResponseDTO create(PropertyRequestDTO requestDTO) {
+        // Convert DTO to entity
         Property property = propertyMapper.toEntity(requestDTO);
+
+        // Fetch and set the landlord
+        AppUser landlord = userRepository.findById(requestDTO.getLandlordId())
+            .orElseThrow(() -> new RuntimeException("Landlord not found"));
+        property.setLandlord(landlord);
+
+        // Save the property first (without universities and amenities)
+        Property savedProperty = propertyRepository.save(property);
+
+        // Fetch universities by IDs
         List<University> universities = universityRepository.findAllById(requestDTO.getUniversityIds());
         if (universities.size() != requestDTO.getUniversityIds().size()) {
             throw new RuntimeException("Some university IDs do not exist");
         }
-        property.setUniversities(universities);
+        savedProperty.setUniversities(universities);
+
+        // Update the properties field on each university
         for (University university : universities) {
-            university.getProperties().add(property);
+            university.getProperties().add(savedProperty);
         }
-        AppUser landlord = userRepository.findById(requestDTO.getLandlordId())
-            .orElseThrow(() -> new RuntimeException("Landlord not found"));
-        property.setLandlord(landlord);
 
         List<Amenity> amenities = amenityRepository.findAllById(requestDTO.getAmenityIds());
         if (amenities.size() != requestDTO.getAmenityIds().size()) {
             throw new RuntimeException("Some amenity IDs do not exist");
         }
-        property.setAmenities(amenities);
-        Property savedProperty = propertyRepository.save(property);
+        savedProperty.setAmenities(amenities);
 
-        universityRepository.saveAll(universities);
+        propertyRepository.save(savedProperty);
 
+        // Handle images
         if (requestDTO.getImages() != null && !requestDTO.getImages().isEmpty()) {
             List<Image> images = requestDTO.getImages().stream()
                 .map(imageDTO -> {
@@ -68,7 +78,9 @@ public class PropertyService implements PropertyServiceI {
                 .collect(Collectors.toList());
             savedProperty.setImages(images);
         }
+
         propertyRepository.save(savedProperty);
+
         return propertyMapper.toResponseDTO(savedProperty);
     }
 
