@@ -17,6 +17,7 @@ public class PropertyResponseDTO {
     private boolean available;
     private Long landlordId;
     private List<Long> universityIds;
+    private List<AmenityResponseDTO> amenities;
     private List<String> imageUrls;
     private String landlordName;
 }
