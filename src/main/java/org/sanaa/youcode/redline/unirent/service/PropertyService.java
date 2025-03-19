@@ -35,24 +35,26 @@ public class PropertyService implements PropertyServiceI {
 
     @Override
     public PropertyResponseDTO create(PropertyRequestDTO requestDTO) {
-
         Property property = propertyMapper.toEntity(requestDTO);
-
         List<University> universities = universityRepository.findAllById(requestDTO.getUniversityIds());
         if (universities.size() != requestDTO.getUniversityIds().size()) {
             throw new RuntimeException("Some university IDs do not exist");
         }
-
         property.setUniversities(universities);
-
         for (University university : universities) {
             university.getProperties().add(property);
         }
-
         AppUser landlord = userRepository.findById(requestDTO.getLandlordId())
             .orElseThrow(() -> new RuntimeException("Landlord not found"));
         property.setLandlord(landlord);
+
+        List<Amenity> amenities = amenityRepository.findAllById(requestDTO.getAmenityIds());
+        if (amenities.size() != requestDTO.getAmenityIds().size()) {
+            throw new RuntimeException("Some amenity IDs do not exist");
+        }
+        property.setAmenities(amenities);
         Property savedProperty = propertyRepository.save(property);
+
         universityRepository.saveAll(universities);
 
         if (requestDTO.getImages() != null && !requestDTO.getImages().isEmpty()) {
@@ -66,29 +68,9 @@ public class PropertyService implements PropertyServiceI {
                 .collect(Collectors.toList());
             savedProperty.setImages(images);
         }
-
-        if (requestDTO.getAmenityProperties() != null && !requestDTO.getAmenityProperties().isEmpty()) {
-            List<AmenityProperty> amenityProperties = requestDTO.getAmenityProperties().stream()
-                .map(amenityPropertyDTO -> {
-                    AmenityProperty amenityProperty = new AmenityProperty();
-                    amenityProperty.setQuantity(amenityPropertyDTO.getQuantity());
-
-                    Amenity amenity = amenityRepository.findById(amenityPropertyDTO.getAmenityId())
-                        .orElseThrow(() -> new RuntimeException("Amenity not found"));
-                    amenityProperty.setAmenity(amenity);
-
-                    amenityProperty.setProperty(savedProperty);
-                    return amenityProperty;
-                })
-                .collect(Collectors.toList());
-            savedProperty.setAmenityProperties(amenityProperties);
-        }
-
         propertyRepository.save(savedProperty);
-
         return propertyMapper.toResponseDTO(savedProperty);
     }
-
 
     @Override
     public Optional<PropertyResponseDTO> getById(Long id) {
