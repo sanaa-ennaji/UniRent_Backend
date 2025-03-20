@@ -26,4 +26,5 @@ public class PropertyRequestDTO {
     private List<Long> universityIds;
     private List<ImageRequestDTO> images;
     private List<Long> amenityIds;
+//    private int personNumbers;
 }

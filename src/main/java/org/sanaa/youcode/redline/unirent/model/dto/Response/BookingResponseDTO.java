@@ -15,6 +15,11 @@ public class BookingResponseDTO {
     private String status;
     private Long propertyId;
     private String propertyTitle;
+    private Long price ;
     private Long studentId;
-    private String studentName;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
+    private String gender;
 }

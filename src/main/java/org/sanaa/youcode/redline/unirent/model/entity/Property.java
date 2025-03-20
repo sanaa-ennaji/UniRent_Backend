@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 
@@ -35,6 +36,7 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
+//    private int personNumbers;
     @ManyToMany
     @JoinTable(
         name = "property_amenity",

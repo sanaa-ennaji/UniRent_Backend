@@ -20,6 +20,12 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
+    private String gender;
+
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
@@ -27,6 +33,4 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
     private AppUser student;
-
-
 }
