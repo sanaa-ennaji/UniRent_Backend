@@ -28,6 +28,10 @@ jwt:
   secret: aGi45u87K34m/25Cnmm0Ppuu31Lc7/Gb+tFbZQxkXSs=
   expirationMs: 86400000
 
+# Stripe Configuration
+stripe:
+  secret-key: pk_test_51P6xhJEp1ITeo4C2EAQZBkWLj325XaDTsLXUg07BodOzpRn25Uw2NjIUMi3A69T1HTvLQUsf4juGe7SzdGcXLvq200YAvFJEg1
+
 logging:
   level:
     org.springframework.security: TRACE
