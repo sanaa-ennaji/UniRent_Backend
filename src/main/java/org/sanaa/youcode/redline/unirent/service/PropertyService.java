@@ -23,7 +23,7 @@ public class PropertyService implements PropertyServiceI {
     private final PropertyMapper propertyMapper;
     private final UniversityRepository universityRepository;
     private final UserRepository userRepository;
-    private final AmenityRepository amenityRepository; // Inject AmenityRepository
+    private final AmenityRepository amenityRepository;
 
     public PropertyService(PropertyRepository propertyRepository, PropertyMapper propertyMapper, UniversityRepository universityRepository, UserRepository userRepository, AmenityRepository amenityRepository) {
         this.propertyRepository = propertyRepository;
@@ -35,25 +35,18 @@ public class PropertyService implements PropertyServiceI {
 
     @Override
     public PropertyResponseDTO create(PropertyRequestDTO requestDTO) {
-        // Convert DTO to entity
-        Property property = propertyMapper.toEntity(requestDTO);
 
-        // Fetch and set the landlord
+        Property property = propertyMapper.toEntity(requestDTO);
         AppUser landlord = userRepository.findById(requestDTO.getLandlordId())
             .orElseThrow(() -> new RuntimeException("Landlord not found"));
         property.setLandlord(landlord);
 
-        // Save the property first (without universities and amenities)
         Property savedProperty = propertyRepository.save(property);
-
-        // Fetch universities by IDs
         List<University> universities = universityRepository.findAllById(requestDTO.getUniversityIds());
         if (universities.size() != requestDTO.getUniversityIds().size()) {
             throw new RuntimeException("Some university IDs do not exist");
         }
         savedProperty.setUniversities(universities);
-
-        // Update the properties field on each university
         for (University university : universities) {
             university.getProperties().add(savedProperty);
         }

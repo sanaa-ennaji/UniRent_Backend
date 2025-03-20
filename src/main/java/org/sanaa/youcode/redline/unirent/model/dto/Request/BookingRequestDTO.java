@@ -6,22 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingRequestDTO {
-    @NotBlank
-    private String startDate;
-
-    @NotBlank
-    private String endDate;
-
+    private LocalDate startDate;
+    private LocalDate endDate;
     @NotNull
     private Long propertyId;
-
+    private String status;
     @NotNull
     private Long studentId;
-
     private String firstName;
     private String lastName;
     private String phoneNumber;

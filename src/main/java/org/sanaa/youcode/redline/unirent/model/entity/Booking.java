@@ -5,6 +5,8 @@ import lombok.Data;
 import org.sanaa.youcode.redline.unirent.model.enums.Status;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "bookings")
 @Data
@@ -15,8 +17,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     @Enumerated(EnumType.STRING)
     private Status status;
 
