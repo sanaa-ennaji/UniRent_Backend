@@ -19,16 +19,14 @@ public class PaymentController {
     public String createPaymentIntent(@RequestBody PaymentRequest paymentRequest) throws StripeException {
         Stripe.apiKey = stripeSecretKey;
 
-        // Create a PaymentIntent with the order amount and currency
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-            .setAmount(paymentRequest.getAmount() * 100L) // Convert to cents
-            .setCurrency("usd") // Change to your currency
+            .setAmount(paymentRequest.getAmount() * 100L)
+            .setCurrency("usd")
             .setDescription("Payment for property booking")
             .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
 
-        // Return the client secret to the frontend
         return paymentIntent.getClientSecret();
     }
 }
