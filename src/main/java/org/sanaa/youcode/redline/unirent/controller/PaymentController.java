@@ -8,8 +8,7 @@ import org.sanaa.youcode.redline.unirent.model.dto.Request.PaymentRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/payments")
@@ -19,19 +18,17 @@ public class PaymentController {
     private String stripeSecretKey;
 
     @PostMapping("/create-checkout-session")
-    public Map<String, String> createCheckoutSession(@RequestBody PaymentRequest paymentRequest) throws StripeException {
+    public String createCheckoutSession(@RequestBody PaymentRequest paymentRequest) throws StripeException {
         Stripe.apiKey = stripeSecretKey;
+
 
         SessionCreateParams params = SessionCreateParams.builder()
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
-            .setMode(SessionCreateParams.Mode.PAYMENT)
-            .setSuccessUrl("http://localhost:4200/payment-success?bookingId=" + paymentRequest.getBookingId())
-            .setCancelUrl("http://localhost:4200/payment-cancel")
             .addLineItem(
                 SessionCreateParams.LineItem.builder()
                     .setPriceData(
                         SessionCreateParams.LineItem.PriceData.builder()
-                            .setCurrency("MAD")
+                            .setCurrency(paymentRequest.getCurrency())
                             .setUnitAmount(paymentRequest.getAmount() * 100L)
                             .setProductData(
                                 SessionCreateParams.LineItem.PriceData.ProductData.builder()
@@ -43,12 +40,13 @@ public class PaymentController {
                     .setQuantity(1L)
                     .build()
             )
+            .setMode(SessionCreateParams.Mode.PAYMENT)
+            .setSuccessUrl("http://localhost:4200/payment-success?bookingId=" + paymentRequest.getBookingId())
+            .setCancelUrl("http://localhost:4200/payment-cancel")
             .build();
 
         Session session = Session.create(params);
 
-        Map<String, String> response = new HashMap<>();
-        response.put("sessionId", session.getId());
-        return response;
+        return session.getId();
     }
 }

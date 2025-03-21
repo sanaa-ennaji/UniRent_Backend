@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class PaymentRequest {
     private Long amount;
     private String currency;
-    private Long BookingId;
+    private Long bookingId;
 }

@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/properties/**").permitAll()
                 .requestMatchers("/api/v1/booking/**").permitAll()
                 .requestMatchers("/api/payments/create-payment-intent").permitAll()
+                .requestMatchers("/api/payments/create-checkout-session").permitAll()
                 .requestMatchers("/error").permitAll()
                 .requestMatchers("/api/amenity/**").permitAll()
                 .anyRequest().authenticated()
