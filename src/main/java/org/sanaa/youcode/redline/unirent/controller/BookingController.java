@@ -1,5 +1,6 @@
 package org.sanaa.youcode.redline.unirent.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.BookingRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.BookingResponseDTO;
@@ -29,7 +30,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<BookingResponseDTO> createBooking(@RequestBody BookingRequestDTO requestDTO) {
+    public ResponseEntity<BookingResponseDTO> createBooking(@Valid @RequestBody BookingRequestDTO requestDTO) {
         return ResponseEntity.ok(bookingService.createBooking(requestDTO));
     }
 

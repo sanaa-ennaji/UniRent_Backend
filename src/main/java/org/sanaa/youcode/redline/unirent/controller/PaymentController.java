@@ -2,11 +2,14 @@ package org.sanaa.youcode.redline.unirent.controller;
 
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
+import com.stripe.model.checkout.Session;
+import com.stripe.param.checkout.SessionCreateParams;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.PaymentRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -15,18 +18,37 @@ public class PaymentController {
     @Value("${stripe.secret-key}")
     private String stripeSecretKey;
 
-    @PostMapping("/create-payment-intent")
-    public String createPaymentIntent(@RequestBody PaymentRequest paymentRequest) throws StripeException {
+    @PostMapping("/create-checkout-session")
+    public Map<String, String> createCheckoutSession(@RequestBody PaymentRequest paymentRequest) throws StripeException {
         Stripe.apiKey = stripeSecretKey;
 
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-            .setAmount(paymentRequest.getAmount() * 100L)
-            .setCurrency("usd")
-            .setDescription("Payment for property booking")
+        SessionCreateParams params = SessionCreateParams.builder()
+            .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+            .setMode(SessionCreateParams.Mode.PAYMENT)
+            .setSuccessUrl("http://localhost:4200/payment-success?bookingId=" + paymentRequest.getBookingId())
+            .setCancelUrl("http://localhost:4200/payment-cancel")
+            .addLineItem(
+                SessionCreateParams.LineItem.builder()
+                    .setPriceData(
+                        SessionCreateParams.LineItem.PriceData.builder()
+                            .setCurrency("MAD")
+                            .setUnitAmount(paymentRequest.getAmount() * 100L)
+                            .setProductData(
+                                SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                                    .setName("Property Booking")
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .setQuantity(1L)
+                    .build()
+            )
             .build();
 
-        PaymentIntent paymentIntent = PaymentIntent.create(params);
+        Session session = Session.create(params);
 
-        return paymentIntent.getClientSecret();
+        Map<String, String> response = new HashMap<>();
+        response.put("sessionId", session.getId());
+        return response;
     }
 }

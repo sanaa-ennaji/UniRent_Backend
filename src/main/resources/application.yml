@@ -30,7 +30,7 @@ jwt:
 
 # Stripe Configuration
 stripe:
-  secret-key: pk_test_51P6xhJEp1ITeo4C2EAQZBkWLj325XaDTsLXUg07BodOzpRn25Uw2NjIUMi3A69T1HTvLQUsf4juGe7SzdGcXLvq200YAvFJEg1
+  secret-key: sk_test_51R544ORu3YBYxBYKbSvdvLG14OoWNKUyOOCF9gt9Xndlx2hzzoauj054S76y3IwN5Yt7o3gV0Y0MBThfEvDmWrpe00y7Ywrpqq
 
 logging:
   level:
