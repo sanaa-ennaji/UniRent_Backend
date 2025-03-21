@@ -4,6 +4,8 @@ package org.sanaa.youcode.redline.unirent.model.dto.Response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sanaa.youcode.redline.unirent.model.entity.Booking;
+
 
 import java.time.LocalDate;
 
@@ -23,4 +25,8 @@ public class BookingResponseDTO {
     private String phoneNumber;
     private String email;
     private String gender;
+
+
+    public BookingResponseDTO(Booking booking) {
+    }
 }

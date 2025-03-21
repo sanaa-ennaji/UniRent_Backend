@@ -7,6 +7,7 @@ import org.sanaa.youcode.redline.unirent.model.dto.Response.BookingResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
 import org.sanaa.youcode.redline.unirent.model.entity.Booking;
 import org.sanaa.youcode.redline.unirent.model.entity.Property;
+import org.sanaa.youcode.redline.unirent.model.enums.Status;
 import org.sanaa.youcode.redline.unirent.model.mapper.BookingMapper;
 import org.sanaa.youcode.redline.unirent.repository.BookingRepository;
 import org.sanaa.youcode.redline.unirent.repository.PropertyRepository;
@@ -63,6 +64,16 @@ public class BookingService implements BookingServiceI {
         return bookingMapper.toResponseDTO(bookingRepository.save(booking));
     }
 
+
+    public BookingResponseDTO updateBookingStatus(Long bookingId, String status) {
+        Booking booking = bookingRepository.findById(bookingId)
+            .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        booking.setStatus(Status.valueOf(status));
+        bookingRepository.save(booking);
+
+        return new BookingResponseDTO(booking);
+    }
     @Override
     public BookingResponseDTO updateBooking(Long id, BookingRequestDTO requestDTO) {
         Booking booking = bookingRepository.findById(id)
