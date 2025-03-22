@@ -45,6 +45,10 @@ public class BookingService implements BookingServiceI {
         return bookingMapper.toResponseDTOList(bookingRepository.findAll());
     }
 
+    public List<BookingResponseDTO> getConfirmedBookingsByLandlordId(Long landlordId) {
+        List<Booking> bookings = bookingRepository.findByLandlordIdAndStatus(landlordId, Status.CONFIRMED);
+        return bookingMapper.toResponseDTOList(bookings);
+    }
     @Override
     @Transactional
     public BookingResponseDTO createBooking(BookingRequestDTO requestDTO) {

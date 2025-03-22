@@ -51,4 +51,9 @@ public class BookingController {
         bookingService.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/landlord/{landlordId}")
+    public ResponseEntity<List<BookingResponseDTO>> getConfirmedBookingsByLandlordId(@PathVariable Long landlordId) {
+        List<BookingResponseDTO> bookings = bookingService.getConfirmedBookingsByLandlordId(landlordId);
+        return ResponseEntity.ok(bookings);
+    }
 }
