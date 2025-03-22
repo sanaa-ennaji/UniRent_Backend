@@ -12,6 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring" )
 public interface BookingMapper {
     @Mapping(source = "property.id", target = "propertyId")
+    @Mapping(source = "property.title", target = "propertyTitle")
     @Mapping(source = "student.id", target = "studentId")
     @Mapping(source = "property.price", target = "price")
     BookingResponseDTO toResponseDTO(Booking entity) ;

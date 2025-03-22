@@ -18,6 +18,7 @@ public class BookingResponseDTO {
     private LocalDate endDate;
     private String status;
     private Long propertyId;
+    private String propertyTitle;
     private Long price ;
     private Long studentId;
     private String firstName;
