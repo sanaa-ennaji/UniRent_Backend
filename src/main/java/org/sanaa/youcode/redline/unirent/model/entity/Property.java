@@ -1,10 +1,10 @@
 package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +20,10 @@ public class Property {
     private String address;
     private double price;
     private boolean available;
+    private LocalDate startDate;
     private String  description ;
     private String Type ;
-
+    private int personNumbers;
     @ManyToOne
     @JoinColumn(name = "landlord_id")
     private AppUser landlord;

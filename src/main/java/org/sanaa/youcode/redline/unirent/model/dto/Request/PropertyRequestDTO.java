@@ -1,11 +1,11 @@
 package org.sanaa.youcode.redline.unirent.model.dto.Request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -19,6 +19,14 @@ public class PropertyRequestDTO {
     @NotNull
     private double price;
     private boolean available;
+    @NotNull
+    @Min(value = 1, message = "Number of persons must be at least 1")
+    @Max(value = 10, message = "Number of persons cannot exceed 10")
+    private Integer personNumbers;
+
+    @NotNull
+    @FutureOrPresent(message = "Start date must be in the present or future")
+    private LocalDate startDate;
     private String  description ;
     private String Type;
     @NotNull
@@ -26,5 +34,5 @@ public class PropertyRequestDTO {
     private List<Long> universityIds;
     private List<ImageRequestDTO> images;
     private List<Long> amenityIds;
-//    private int personNumbers;
+
 }
