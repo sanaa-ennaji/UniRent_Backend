@@ -59,7 +59,6 @@ public class PropertyService implements PropertyServiceI {
 
         propertyRepository.save(savedProperty);
 
-        // Handle images
         if (requestDTO.getImages() != null && !requestDTO.getImages().isEmpty()) {
             List<Image> images = requestDTO.getImages().stream()
                 .map(imageDTO -> {
@@ -99,7 +98,31 @@ public class PropertyService implements PropertyServiceI {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
+        Property property = propertyRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Property not found"));
+
+        if (property.getImages() != null && !property.getImages().isEmpty()) {
+            property.getImages().clear();
+        }
+
+        if (property.getUniversities() != null && !property.getUniversities().isEmpty()) {
+            for (University university : property.getUniversities()) {
+                university.getProperties().remove(property);
+            }
+            property.getUniversities().clear();
+        }
+
+        if (property.getAmenities() != null && !property.getAmenities().isEmpty()) {
+            for (Amenity amenity : property.getAmenities()) {
+                amenity.getProperties().remove(property);
+            }
+            property.getAmenities().clear();
+        }
+
+        propertyRepository.save(property);
+
         propertyRepository.deleteById(id);
     }
 }
