@@ -36,7 +36,6 @@ public class Property {
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-//    private int personNumbers;
     @ManyToMany
     @JoinTable(
         name = "property_amenity",

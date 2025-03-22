@@ -1,6 +1,7 @@
 package org.sanaa.youcode.redline.unirent.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.sanaa.youcode.redline.unirent.model.enums.Status;
 import org.springframework.data.annotation.Id;
@@ -31,8 +32,8 @@ public class Booking {
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
-
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    @JoinColumn(name = "student_id")
     private AppUser student;
 }

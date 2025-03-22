@@ -15,7 +15,7 @@ public interface BookingMapper {
     @Mapping(source = "student.id", target = "studentId")
     @Mapping(source = "property.price", target = "price")
     BookingResponseDTO toResponseDTO(Booking entity) ;
-    @Mapping(source = "studentId", target = "student.id")
+
     @Mapping(source = "propertyId", target = "property.id")
     Booking toEntity(BookingRequestDTO requestDTO);
     List<BookingResponseDTO> toResponseDTOList (List<Booking> entities);
