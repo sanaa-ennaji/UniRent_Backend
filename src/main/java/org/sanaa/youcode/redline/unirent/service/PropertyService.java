@@ -77,12 +77,9 @@ public class PropertyService implements PropertyServiceI {
         return propertyMapper.toResponseDTO(savedProperty);
     }
 
-  @Override
+    @Override
     public List<PropertyResponseDTO> searchProperties(String title, Double price, LocalDate startDate) {
-
-        List<Property> properties = propertyRepository.search(
-            title, price, startDate
-        );
+        List<Property> properties = propertyRepository.searchProperties(title, price, startDate);
         return propertyMapper.toResponseDTOList(properties);
     }
     @Override

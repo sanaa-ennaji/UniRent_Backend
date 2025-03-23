@@ -53,9 +53,20 @@ public class UserService  implements  UserServiceI{
 
     @Override
     public UserResponseDTO updateUser(long id, UserRequestDTO userRequestDTO) {
-        return null;
-    }
+        AppUser user = userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPhoneNumber(userRequestDTO.getPhoneNumber());
+
+        if (userRequestDTO.getPassword() != null && !userRequestDTO.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        }
+
+        AppUser updatedUser = userRepository.save(user);
+        return userMapper.toResponseDto(updatedUser);
+    }
     @Override
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
 
