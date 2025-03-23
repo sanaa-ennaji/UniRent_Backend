@@ -18,6 +18,8 @@ public class PropertyResponseDTO {
     private double price;
     private boolean available;
     private LocalDate startDate;
+    private Double latitude;
+    private Double longitude;
     private Long landlordId;
     private List<Long> universityIds;
     private List<AmenityResponseDTO> amenities;

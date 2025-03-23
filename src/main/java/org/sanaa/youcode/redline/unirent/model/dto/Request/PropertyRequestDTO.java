@@ -19,6 +19,8 @@ public class PropertyRequestDTO {
     @NotNull
     private double price;
     private boolean available;
+    private Double latitude;
+    private Double longitude;
     @NotNull
     @Min(value = 1, message = "Number of persons must be at least 1")
     @Max(value = 10, message = "Number of persons cannot exceed 10")

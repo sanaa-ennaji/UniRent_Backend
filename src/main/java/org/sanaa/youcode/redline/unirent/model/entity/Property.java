@@ -25,6 +25,8 @@ public class Property {
     private String  description ;
     private String Type ;
     private int personNumbers;
+    private Double latitude;
+    private Double longitude;
     @ManyToOne
     @JoinColumn(name = "landlord_id")
     private AppUser landlord;
@@ -34,9 +36,6 @@ public class Property {
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images;
-
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
 
     @ManyToMany
     @JoinTable(

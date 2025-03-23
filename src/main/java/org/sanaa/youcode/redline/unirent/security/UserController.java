@@ -33,5 +33,7 @@ public class UserController {
         UserResponseDTO userResponseDTO = userService.getUserById(id);
         return ResponseEntity.ok(userResponseDTO);
     }
+
+
 }
 
