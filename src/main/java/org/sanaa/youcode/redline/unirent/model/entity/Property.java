@@ -20,6 +20,7 @@ public class Property {
     private String address;
     private double price;
     private boolean available;
+
     private LocalDate startDate;
     private String  description ;
     private String Type ;

@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.PropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.PropertyResponseDTO;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.PropertyServiceI;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -47,6 +49,15 @@ private final PropertyServiceI propertyServiceI;
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "property not found"));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<PropertyResponseDTO>> searchProperties(
+        @RequestParam(required = false) String title,
+        @RequestParam(required = false) Double price,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate
+    ) {
+        List<PropertyResponseDTO> properties = propertyServiceI.searchProperties(title, price, startDate);
+        return ResponseEntity.ok(properties);
+    }
     @GetMapping
     public ResponseEntity<List<PropertyResponseDTO>> findAll() {
         List<PropertyResponseDTO> properties = propertyServiceI.getAll();

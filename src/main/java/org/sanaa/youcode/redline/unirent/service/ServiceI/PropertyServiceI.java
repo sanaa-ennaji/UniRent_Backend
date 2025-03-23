@@ -3,6 +3,7 @@ package org.sanaa.youcode.redline.unirent.service.ServiceI;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.PropertyRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.PropertyResponseDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,4 +13,5 @@ public interface PropertyServiceI {
     PropertyResponseDTO create(PropertyRequestDTO requestDTO);
     PropertyResponseDTO update(Long id, PropertyRequestDTO requestDTO);
     void delete(Long id);
+    List<PropertyResponseDTO> searchProperties(String title, Double price, LocalDate startDate);
 }

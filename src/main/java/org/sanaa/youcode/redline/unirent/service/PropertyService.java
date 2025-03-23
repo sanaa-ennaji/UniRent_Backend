@@ -12,6 +12,7 @@ import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.PropertyServiceI;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,6 +77,14 @@ public class PropertyService implements PropertyServiceI {
         return propertyMapper.toResponseDTO(savedProperty);
     }
 
+  @Override
+    public List<PropertyResponseDTO> searchProperties(String title, Double price, LocalDate startDate) {
+
+        List<Property> properties = propertyRepository.search(
+            title, price, startDate
+        );
+        return propertyMapper.toResponseDTOList(properties);
+    }
     @Override
     public Optional<PropertyResponseDTO> getById(Long id) {
         return propertyRepository.findById(id)
