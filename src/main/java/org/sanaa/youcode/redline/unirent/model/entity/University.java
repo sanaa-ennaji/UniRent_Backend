@@ -2,8 +2,6 @@ package org.sanaa.youcode.redline.unirent.model.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 

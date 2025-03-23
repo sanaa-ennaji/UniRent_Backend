@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.model.entity.AppRole;
@@ -18,6 +20,7 @@ import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.security.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
     @Mock
@@ -81,5 +84,25 @@ public class UserServiceTest {
         verify(passwordEncoder, times(1)).encode("password");
         verify(userRepository, times(1)).save(user);
         verify(userMapper, times(1)).toResponseDto(user);
+    }
+
+
+    @Test
+    public void RoleNotFound() {
+        UserRequestDTO userRequestDTO = new UserRequestDTO();
+        userRequestDTO.setRoleId(1L);
+
+        when(roleRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            userService.registerUser(userRequestDTO);
+        });
+
+        assertEquals("Role not found", exception.getMessage());
+
+        verify(roleRepository, times(1)).findById(1L);
+        verify(userMapper, never()).toEntity(any());
+        verify(passwordEncoder, never()).encode(any());
+        verify(userRepository, never()).save(any());
+        verify(userMapper, never()).toResponseDto(any());
     }
 }

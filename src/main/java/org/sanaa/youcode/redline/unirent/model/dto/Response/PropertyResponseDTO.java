@@ -1,6 +1,5 @@
 package org.sanaa.youcode.redline.unirent.model.dto.Response;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
