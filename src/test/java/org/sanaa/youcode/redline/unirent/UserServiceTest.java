@@ -50,15 +50,15 @@ public class UserServiceTest {
 
         AppUser user = new AppUser();
         user.setId(1L);
-        user.setName("John Doe");
-        user.setEmail("john.doe@example.com");
+        user.setName("sanaa enng");
+        user.setEmail("sanaa.enng@example.com");
         user.setPassword("encodedPassword");
         user.setRole(role);
 
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(1L);
-        userResponseDTO.setName("John Doe");
-        userResponseDTO.setEmail("john.doe@example.com");
+        userResponseDTO.setName("sanaa enng");
+        userResponseDTO.setEmail("sanaa.enng@example.com");
 
         when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
         when(userMapper.toEntity(userRequestDTO)).thenReturn(user);
@@ -68,8 +68,8 @@ public class UserServiceTest {
         UserResponseDTO result = userService.registerUser(userRequestDTO);
         assertNotNull(result);
         assertEquals(1L, result.getId());
-        assertEquals("John Doe", result.getName());
-        assertEquals("john.doe@example.com", result.getEmail());
+        assertEquals("sanaa enng", result.getName());
+        assertEquals("sanaa.enng@example.com", result.getEmail());
 
         verify(roleRepository, times(1)).findById(1L);
         verify(userMapper, times(1)).toEntity(userRequestDTO);
@@ -134,13 +134,13 @@ public class UserServiceTest {
         Long userId = 1L;
         AppUser user = new AppUser();
         user.setId(userId);
-        user.setName("John Doe");
-        user.setEmail("john.doe@example.com");
+        user.setName("sanaa enng");
+        user.setEmail("sanaa.enng@example.com");
 
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(userId);
-        userResponseDTO.setName("John Doe");
-        userResponseDTO.setEmail("john.doe@example.com");
+        userResponseDTO.setName("sanaa enng");
+        userResponseDTO.setEmail("sanaa.enng@example.com");
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(userMapper.toResponseDto(user)).thenReturn(userResponseDTO);
@@ -150,8 +150,8 @@ public class UserServiceTest {
 
         assertNotNull(result);
         assertEquals(userId, result.getId());
-        assertEquals("John Doe", result.getName());
-        assertEquals("john.doe@example.com", result.getEmail());
+        assertEquals("sanaa enng", result.getName());
+        assertEquals("sanaa.enng@example.com", result.getEmail());
 
         verify(userRepository, times(1)).findById(userId);
         verify(userMapper, times(1)).toResponseDto(user);

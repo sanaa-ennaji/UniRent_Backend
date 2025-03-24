@@ -46,17 +46,6 @@ public class UserService  implements  UserServiceI{
         return userMapper.toResponseDto(savedUser);
     }
 
-
-    @Override
-    public List<UserResponseDTO> getAllUsers() {
-        return List.of();
-    }
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
     @Override
     public UserResponseDTO updateUser(long id, UserRequestDTO userRequestDTO) {
         AppUser user = userRepository.findById(id)
@@ -83,4 +72,17 @@ public class UserService  implements  UserServiceI{
             .orElseThrow(() -> new RuntimeException("User not found"));
         return userMapper.toResponseDto(user);
     }
+
+
+    @Override
+    public List<UserResponseDTO> getAllUsers() {
+        return List.of();
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+
 }

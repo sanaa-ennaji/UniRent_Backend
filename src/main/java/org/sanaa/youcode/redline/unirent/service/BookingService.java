@@ -15,7 +15,10 @@ import org.sanaa.youcode.redline.unirent.repository.UserRepository;
 import org.sanaa.youcode.redline.unirent.service.ServiceI.BookingServiceI;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -89,6 +92,14 @@ public class BookingService implements BookingServiceI {
     @Override
     public void deleteBooking(Long id) {
         bookingRepository.deleteById(id);
+    }
+
+
+    public List<Booking> findAll (){
+
+        return  bookingRepository.findAll().stream()
+            .filter(booking -> booking.getStatus()==Status.CONFIRMED)
+            .collect(Collectors.toList());
     }
 }
 
