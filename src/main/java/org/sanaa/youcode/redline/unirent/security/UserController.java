@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
 import org.sanaa.youcode.redline.unirent.security.service.UserService;
+import org.sanaa.youcode.redline.unirent.service.ServiceI.RoleServiceI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponseDTO> registerUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+
         UserResponseDTO userResponseDTO = userService.registerUser(userRequestDTO);
         return ResponseEntity.ok(userResponseDTO);
     }

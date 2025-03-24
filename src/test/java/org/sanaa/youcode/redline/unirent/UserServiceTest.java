@@ -3,12 +3,10 @@ package org.sanaa.youcode.redline.unirent;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.sanaa.youcode.redline.unirent.model.dto.Request.UserRequestDTO;
 import org.sanaa.youcode.redline.unirent.model.dto.Response.UserResponseDTO;
@@ -17,8 +15,9 @@ import org.sanaa.youcode.redline.unirent.model.entity.AppUser;
 import org.sanaa.youcode.redline.unirent.model.mapper.UserMapper;
 import org.sanaa.youcode.redline.unirent.repository.RoleRepository;
 import org.sanaa.youcode.redline.unirent.repository.UserRepository;
-import org.sanaa.youcode.redline.unirent.security.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -36,15 +35,10 @@ public class UserServiceTest {
     private UserMapper userMapper;
 
     @InjectMocks
-    private UserService userService;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    private org.sanaa.youcode.redline.unirent.security.service.UserService userService;
 
     @Test
-    public void testRegisterUser_Success() {
+    public void RegisterUser() {
 
         UserRequestDTO userRequestDTO = new UserRequestDTO();
         userRequestDTO.setRoleId(1L);
@@ -66,14 +60,12 @@ public class UserServiceTest {
         userResponseDTO.setName("John Doe");
         userResponseDTO.setEmail("john.doe@example.com");
 
-        when(roleRepository.findById(1L)).thenReturn(java.util.Optional.of(role));
+        when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
         when(userMapper.toEntity(userRequestDTO)).thenReturn(user);
         when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
         when(userRepository.save(user)).thenReturn(user);
         when(userMapper.toResponseDto(user)).thenReturn(userResponseDTO);
-
         UserResponseDTO result = userService.registerUser(userRequestDTO);
-
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals("John Doe", result.getName());
@@ -86,13 +78,12 @@ public class UserServiceTest {
         verify(userMapper, times(1)).toResponseDto(user);
     }
 
-
     @Test
     public void RoleNotFound() {
+
         UserRequestDTO userRequestDTO = new UserRequestDTO();
         userRequestDTO.setRoleId(1L);
-
-        when(roleRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+        when(roleRepository.findById(1L)).thenReturn(Optional.empty());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             userService.registerUser(userRequestDTO);
         });
@@ -104,5 +95,65 @@ public class UserServiceTest {
         verify(passwordEncoder, never()).encode(any());
         verify(userRepository, never()).save(any());
         verify(userMapper, never()).toResponseDto(any());
+    }
+    @Test
+    public void ExistingEmail() {
+        UserRequestDTO userRequestDTO = new UserRequestDTO();
+        userRequestDTO.setRoleId(1L);
+        userRequestDTO.setEmail("existing@example.com");
+        userRequestDTO.setPassword("password");
+
+        AppRole role = new AppRole();
+        role.setId(1L);
+        role.setRoleName("USER");
+
+        AppUser existingUser = new AppUser();
+        existingUser.setId(1L);
+        existingUser.setEmail("existing@example.com");
+
+        when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
+        when(userRepository.findByEmail("existing@example.com")).thenReturn(Optional.of(existingUser));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            userService.registerUser(userRequestDTO);
+        });
+
+        assertEquals("Email already exists", exception.getMessage());
+
+        verify(roleRepository, times(1)).findById(1L);
+        verify(userRepository, times(1)).findByEmail("existing@example.com");
+        verify(userMapper, never()).toEntity(any());
+        verify(passwordEncoder, never()).encode(any());
+        verify(userRepository, never()).save(any());
+        verify(userMapper, never()).toResponseDto(any());
+    }
+
+
+    @Test
+    public void FindUserById() {
+
+        Long userId = 1L;
+        AppUser user = new AppUser();
+        user.setId(userId);
+        user.setName("John Doe");
+        user.setEmail("john.doe@example.com");
+
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(userId);
+        userResponseDTO.setName("John Doe");
+        userResponseDTO.setEmail("john.doe@example.com");
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(userMapper.toResponseDto(user)).thenReturn(userResponseDTO);
+
+        UserResponseDTO result = userService.getUserById(userId);
+
+
+        assertNotNull(result);
+        assertEquals(userId, result.getId());
+        assertEquals("John Doe", result.getName());
+        assertEquals("john.doe@example.com", result.getEmail());
+
+        verify(userRepository, times(1)).findById(userId);
+        verify(userMapper, times(1)).toResponseDto(user);
     }
 }

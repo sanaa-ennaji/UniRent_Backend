@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+
 public class UserService  implements  UserServiceI{
 
     private final UserRepository userRepository;
@@ -34,12 +35,17 @@ public class UserService  implements  UserServiceI{
     public UserResponseDTO registerUser(UserRequestDTO userRequestDTO) {
         AppRole role = roleRepository.findById(userRequestDTO.getRoleId())
             .orElseThrow(() -> new RuntimeException("Role not found"));
+        if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
         AppUser user = userMapper.toEntity(userRequestDTO);
         user.setRole(role);
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         AppUser savedUser = userRepository.save(user);
+
         return userMapper.toResponseDto(savedUser);
     }
+
 
     @Override
     public List<UserResponseDTO> getAllUsers() {
