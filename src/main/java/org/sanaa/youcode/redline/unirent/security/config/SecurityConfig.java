@@ -3,6 +3,7 @@ package org.sanaa.youcode.redline.unirent.security.config;
 import org.sanaa.youcode.redline.unirent.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,23 +31,23 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/roles/**").permitAll()
                 .requestMatchers("/api/users/register").permitAll()
                 .requestMatchers("/api/users/**").permitAll()
                 .requestMatchers("/api/authenticate").permitAll()
-                .requestMatchers("/api/universities/**").permitAll()
-                .requestMatchers("/api/properties/**").permitAll()
-                .requestMatchers("/api/v1/booking/**").permitAll()
-                .requestMatchers("/api/payments/create-payment-intent").permitAll()
-                .requestMatchers("/api/payments/create-checkout-session").permitAll()
                 .requestMatchers("/error").permitAll()
+                .requestMatchers("/api/v1/booking/**").authenticated()
+                .requestMatchers("/api/payments/**").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/properties/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/api/properties/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/properties/**").permitAll()
                 .requestMatchers("/api/amenity/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/api/roles/**").permitAll()
+                .requestMatchers("/api/universities/**").permitAll()
+                .anyRequest().permitAll()
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
-
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
